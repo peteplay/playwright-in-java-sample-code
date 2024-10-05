@@ -36,4 +36,21 @@ jobs:
 
       # Step 4: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
-        run: mvn verify
+        run: |
+          mvn verify
+          mvn allure:report
+
+      # Step 5: Upload the Allure results as an artifact for download
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      # Step 7: Publish Allure Report to GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
+        if: ${{ github.event_name == 'push' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/site/allure-maven-plugin
