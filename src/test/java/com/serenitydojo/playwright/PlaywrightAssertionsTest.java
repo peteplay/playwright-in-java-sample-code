@@ -12,6 +12,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -125,5 +126,27 @@ public class PlaywrightAssertionsTest {
                                     .isGreaterThan(0.0)
                                     .isLessThan(1000.0));
         }
+
+
+        @Test
+        void shouldSortInAlphabeticalOrder() {
+            page.getByLabel("Sort").selectOption("Name (A - Z)");
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            List<String> productNames = page.getByTestId("product-name").allTextContents();
+
+            Assertions.assertThat(productNames).isSortedAccordingTo(String.CASE_INSENSITIVE_ORDER);
+        }
+
+        @Test
+        void shouldSortInReverseAlphabeticalOrder() {
+            page.getByLabel("Sort").selectOption("Name (Z - A)");
+            page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            List<String> productNames = page.getByTestId("product-name").allTextContents();
+
+            Assertions.assertThat(productNames).isSortedAccordingTo(Comparator.reverseOrder());
+        }
+
     }
 }
