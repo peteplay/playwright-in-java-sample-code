@@ -27,7 +27,7 @@ public class PlaywrightWaitsTest {
         playwright = Playwright.create();
         playwright.selectors().setTestIdAttribute("data-test");
         browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(true)
+                new BrowserType.LaunchOptions().setHeadless(false)
                         .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
         );
     }
@@ -49,48 +49,74 @@ public class PlaywrightWaitsTest {
         playwright.close();
     }
 
-    @BeforeEach
-    void openHomePage() {
-        page.navigate("https://practicesoftwaretesting.com");
-        page.waitForSelector("[data-test='product-name']");
+    @Nested
+    class WaitingForState {
+        @BeforeEach
+        void openHomePage() {
+            page.navigate("https://practicesoftwaretesting.com");
+            page.waitForSelector(".card-img-top");
+        }
+
+        @Test
+        void shouldShowAllProductNames() {
+            List<String> productNames = page.getByTestId("product-name").allInnerTexts();
+            Assertions.assertThat(productNames).contains("Pliers", "Bolt Cutters", "Hammer");
+        }
+
+        @Test
+        void shouldShowAllProductImages() {
+            List<String> productImageTitles = page.locator(".card-img-top").all()
+                    .stream()
+                    .map(img -> img.getAttribute("alt"))
+                    .toList();
+
+            Assertions.assertThat(productImageTitles).contains("Pliers", "Bolt Cutters", "Hammer");
+        }
     }
 
-    @DisplayName("Playwright waits automatically for elements by default")
     @Nested
-    class AutoWaits {
+    class AutomaticWaits {
+        @BeforeEach
+        void openHomePage() {
+            page.navigate("https://practicesoftwaretesting.com");
+        }
 
         // Automatic wait
         @Test
-        @DisplayName("It should wait for the filter checkbox options to appear before clicking")
+        @DisplayName("Should wait for the filter checkbox options to appear before clicking")
         void shouldWaitForTheFilterCheckboxes() {
-            var screwDriverFilter = page.getByLabel("Screwdriver");
-            //
-            // The checkboxes take an instant to render on the page
-            //
-            screwDriverFilter.click();
 
-            assertThat(screwDriverFilter).isChecked();
+            var screwdriverFilter = page.getByLabel("Screwdriver");
+
+            screwdriverFilter.click();
+
+            assertThat(screwdriverFilter).isChecked();
         }
 
-        // Explicit wait
         @Test
-        @DisplayName("Specify customized options when waiting for an element")
-        void shouldWaitForAnElement() {
-
-            // Open the categories menu
+        @DisplayName("Should filter products by category")
+        void shouldFilterProductsByCategory() {
             page.getByRole(AriaRole.MENUBAR).getByText("Categories").click();
             page.getByRole(AriaRole.MENUBAR).getByText("Power Tools").click();
 
-
             page.waitForSelector(".card",
-                    new Page.WaitForSelectorOptions()
-                            .setState(WaitForSelectorState.VISIBLE)
-                            .setTimeout(5000));
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(2000)
+                    );
 
-            assertThat(page.getByTestId("product-name").getByText("Sheet Sander")).isVisible();
+            var filteredProducts = page.getByTestId("product-name").allInnerTexts();
+
+            Assertions.assertThat(filteredProducts).contains("Sheet Sander", "Belt Sander","Random Orbit Sander");
+
+        }
+    }
+
+    @Nested
+    class WaitingForElementsToAppearAndDisappear {
+        @BeforeEach
+        void openHomePage() {
+            page.navigate("https://practicesoftwaretesting.com");
         }
 
-        // Wait for an element to appear or disappear
         @Test
         @DisplayName("It should display a toaster message when an item is added to the cart")
         void shouldDisplayToasterMessage() {
@@ -101,8 +127,18 @@ public class PlaywrightWaitsTest {
             assertThat(page.getByRole(AriaRole.ALERT)).isVisible();
             assertThat(page.getByRole(AriaRole.ALERT)).hasText("Product added to shopping cart.");
 
-            // Wait for the toaster message to disappear
-            page.waitForCondition(() -> page.getByRole(AriaRole.ALERT).isHidden());
+            page.waitForCondition( () -> page.getByRole(AriaRole.ALERT).isHidden() );
+
+        }
+
+        @Test
+        @DisplayName("Should update the cart item count")
+        void shouldUpdateCartItemCount() {
+            page.getByText("Bolt Cutters").click();
+            page.getByText("Add to cart").click();
+
+            page.waitForCondition( () -> page.getByTestId("cart-quantity").textContent().equals("1"));
+            // page.waitForSelector("[data-test=cart-quantity]:has-text('1')");
         }
 
         // Wait for an element to have a particular state
@@ -118,24 +154,5 @@ public class PlaywrightWaitsTest {
             page.waitForSelector("[data-test='cart-quantity']:has-text('1')");
         }
 
-
-        // Wait for an API call to respond after an action
-        @Test
-        @DisplayName("It should wait for the product list to update before reading the product names")
-        void shouldWaitForProductListToUpdate() {
-
-            // Wait for the results to come back from the API call
-            page.waitForResponse(
-                    "**/product*",
-                    () -> {
-                        page.getByLabel("Screwdriver").click();
-                        page.getByLabel("Chisels").click();
-                    });
-
-            List<String> matchingProducts = page.getByTestId("product-name").allTextContents();
-            Assertions.assertThat(matchingProducts)
-                    .allMatch(product -> product.contains("Screwdriver") || product.contains("Chisels"));
-
-        }
     }
 }
