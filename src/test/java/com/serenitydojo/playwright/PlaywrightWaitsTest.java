@@ -27,7 +27,7 @@ public class PlaywrightWaitsTest {
         playwright = Playwright.create();
         playwright.selectors().setTestIdAttribute("data-test");
         browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(false)
+                new BrowserType.LaunchOptions().setHeadless(true)
                         .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
         );
     }
@@ -108,6 +108,22 @@ public class PlaywrightWaitsTest {
             Assertions.assertThat(filteredProducts).contains("Sheet Sander", "Belt Sander","Random Orbit Sander");
 
         }
+
+
+        @Test
+        @DisplayName("Should filter products by category and wait for the API response to return")
+        void shouldFilterProductsByCategoryAfterTheAPIResponseReturns() {
+            page.getByPlaceholder("Search").fill("saw");
+            page.getByPlaceholder("Search").press("Enter");
+
+            page.waitForResponse("**/products/search?q=saw", () -> {});
+
+            var filteredProducts = page.getByTestId("product-name").allInnerTexts();
+
+            Assertions.assertThat(filteredProducts).contains("Wood Saw", "Circular Saw");
+
+        }
+
     }
 
     @Nested
