@@ -9,6 +9,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -101,11 +102,11 @@ public class PlaywrightWaitsTest {
 
             page.waitForSelector(".card",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(2000)
-                    );
+            );
 
             var filteredProducts = page.getByTestId("product-name").allInnerTexts();
 
-            Assertions.assertThat(filteredProducts).contains("Sheet Sander", "Belt Sander","Random Orbit Sander");
+            Assertions.assertThat(filteredProducts).contains("Sheet Sander", "Belt Sander", "Random Orbit Sander");
 
         }
     }
@@ -127,7 +128,7 @@ public class PlaywrightWaitsTest {
             assertThat(page.getByRole(AriaRole.ALERT)).isVisible();
             assertThat(page.getByRole(AriaRole.ALERT)).hasText("Product added to shopping cart.");
 
-            page.waitForCondition( () -> page.getByRole(AriaRole.ALERT).isHidden() );
+            page.waitForCondition(() -> page.getByRole(AriaRole.ALERT).isHidden());
 
         }
 
@@ -137,7 +138,7 @@ public class PlaywrightWaitsTest {
             page.getByText("Bolt Cutters").click();
             page.getByText("Add to cart").click();
 
-            page.waitForCondition( () -> page.getByTestId("cart-quantity").textContent().equals("1"));
+            page.waitForCondition(() -> page.getByTestId("cart-quantity").textContent().equals("1"));
             // page.waitForSelector("[data-test=cart-quantity]:has-text('1')");
         }
 
@@ -153,6 +154,36 @@ public class PlaywrightWaitsTest {
             // Or
             page.waitForSelector("[data-test='cart-quantity']:has-text('1')");
         }
+    }
 
+    @Nested
+    class WaitingForAPICalls {
+
+        @Test
+        void sortByDescendingPrice() {
+            page.navigate("https://practicesoftwaretesting.com");
+
+            // Sort by descending price
+            page.waitForResponse("**/products?sort**",
+                    () -> {
+                        page.getByTestId("sort").selectOption("Price (High - Low)");
+                    });
+
+            // Find all the prices on the page
+            var productPrices = page.getByTestId("product-price")
+                    .allInnerTexts()
+                    .stream()
+                    .map(WaitingForAPICalls::extractPrice)
+                    .toList();
+
+            // Are the prices in the correct order
+            Assertions.assertThat(productPrices)
+                    .isNotEmpty()
+                    .isSortedAccordingTo(Comparator.reverseOrder());
+        }
+
+        private static double extractPrice(String price) {
+            return Double.parseDouble(price.replace("$", ""));
+        }
     }
 }
