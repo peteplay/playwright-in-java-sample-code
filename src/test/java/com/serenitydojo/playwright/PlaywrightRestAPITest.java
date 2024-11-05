@@ -28,7 +28,7 @@ public class PlaywrightRestAPITest {
         playwright = Playwright.create();
         playwright.selectors().setTestIdAttribute("data-test");
         browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(true)
+                new BrowserType.LaunchOptions().setHeadless(false)
                         .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
         );
     }
@@ -50,16 +50,6 @@ public class PlaywrightRestAPITest {
         playwright.close();
     }
 
-    @BeforeEach
-    void openHomePage() {
-        page.route("**/products/search?q=pliers",
-                route -> route.fulfill(new Route.FulfillOptions()
-                        .setBody("{\"message\": \"Internal Server Error\"}")
-                        .setStatus(404))
-        );
-        page.navigate("https://practicesoftwaretesting.com");
-    }
-
     @DisplayName("Playwright allows us to mock out API responses")
     @Nested
     class MockingAPIResponses {
@@ -67,37 +57,40 @@ public class PlaywrightRestAPITest {
         @Test
         @DisplayName("When a search returns a single product")
         void whenASingleItemIsFound() {
-            page.route("**/products/search?q=pliers",
-                    route -> route.fulfill(new Route.FulfillOptions()
-                            .setBody(MockSearchResponses.RESPONSE_WITH_A_SINGLE_ENTRY)
-                            .setStatus(200))
-            );
 
+            // /products/search?q=Pliers
+            page.route("**/products/search?q=Pliers", route -> {
+                route.fulfill(
+                        new Route.FulfillOptions()
+                                .setBody(MockSearchResponses.RESPONSE_WITH_A_SINGLE_ENTRY)
+                                .setStatus(200)
+                );
+            });
             page.navigate("https://practicesoftwaretesting.com");
-            page.getByPlaceholder("Search").fill("pliers");
+            page.getByPlaceholder("Search").fill("Pliers");
             page.getByPlaceholder("Search").press("Enter");
 
             assertThat(page.getByTestId("product-name")).hasCount(1);
-            assertThat(page.getByTestId("product-name")
-                    .filter(new Locator.FilterOptions().setHasText("Super Pliers")))
-                    .isVisible();
+            assertThat(page.getByTestId("product-name")).hasText("Super Pliers");
         }
 
         @Test
         @DisplayName("When a search returns no products")
         void whenNoItemsAreFound() {
-            page.route("**/products/search?q=pliers",
-                    route -> route.fulfill(new Route.FulfillOptions()
-                            .setBody(MockSearchResponses.RESPONSE_WITH_NO_ENTRIES)
-                            .setStatus(200))
-            );
-
+            page.route("**/products/search?q=Pliers", route -> {
+                route.fulfill(
+                        new Route.FulfillOptions()
+                                .setBody(MockSearchResponses.RESPONSE_WITH_NO_ENTRIES)
+                                .setStatus(200)
+                );
+            });
             page.navigate("https://practicesoftwaretesting.com");
-            page.getByPlaceholder("Search").fill("pliers");
+            page.getByPlaceholder("Search").fill("Pliers");
             page.getByPlaceholder("Search").press("Enter");
 
-            assertThat(page.getByTestId("product-name")).isHidden();
+            assertThat(page.getByTestId("product-name")).hasCount(0);
             assertThat(page.getByTestId("search_completed")).hasText("There are no products found.");
+
         }
     }
 }
