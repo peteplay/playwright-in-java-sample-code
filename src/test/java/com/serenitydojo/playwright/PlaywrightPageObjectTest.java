@@ -87,6 +87,22 @@ public class PlaywrightPageObjectTest {
     @Nested
     class WhenAddingItemsToTheCart {
 
+
+        SearchComponent searchComponent;
+        ProductList productList;
+        ProductDetails productDetails;
+        NavBar navBar;
+        CheckoutCart checkoutCart;
+
+        @BeforeEach
+        void setUp() {
+            searchComponent = new SearchComponent(page);
+            productList = new ProductList(page);
+            productDetails = new ProductDetails(page);
+            navBar = new NavBar(page);
+            checkoutCart = new CheckoutCart(page);
+        }
+
         @DisplayName("Without Page Objects")
         @Test
         void withoutPageObjects() {
@@ -115,12 +131,6 @@ public class PlaywrightPageObjectTest {
 
         @Test
         void withPageObjects() {
-            SearchComponent searchComponent = new SearchComponent(page);
-            ProductList productList = new ProductList(page);
-            ProductDetails productDetails = new ProductDetails(page);
-            NavBar navBar = new NavBar(page);
-            CheckoutCart checkoutCart = new CheckoutCart(page);
-
             searchComponent.searchBy("pliers");
             productList.viewProductDetails("Combination Pliers");
 
@@ -139,6 +149,35 @@ public class PlaywrightPageObjectTest {
                         Assertions.assertThat(item.quantity()).isEqualTo(3);
                         Assertions.assertThat(item.total()).isEqualTo(item.quantity() * item.price());
                     });
+        }
+
+        @Test
+        void whenCheckingOutMultipleItems() {
+            navBar.openHomePage();
+            productList.viewProductDetails("Bolt Cutters");
+            productDetails.increaseQuanityBy(2);
+            productDetails.addToCart();
+
+            navBar.openHomePage();
+            productList.viewProductDetails("Slip Joint Pliers");
+            productDetails.addToCart();
+
+            navBar.openCart();
+
+            List<CartLineItem> lineItems = checkoutCart.getLineItems();
+
+            Assertions.assertThat(lineItems).hasSize(2);
+            List<String> productNames = lineItems.stream().map(CartLineItem::title).toList();
+            Assertions.assertThat(productNames).contains("Bolt Cutters","Slip Joint Pliers");
+
+            Assertions.assertThat(lineItems)
+                    .allSatisfy(item -> {
+                        Assertions.assertThat(item.quantity()).isGreaterThanOrEqualTo(1);
+                        Assertions.assertThat(item.price()).isGreaterThan(0.0);
+                        Assertions.assertThat(item.total()).isGreaterThan(0.0);
+                        Assertions.assertThat(item.total()).isEqualTo(item.quantity() * item.price());
+                    });
+
         }
     }
 
@@ -208,6 +247,10 @@ public class PlaywrightPageObjectTest {
         public void openCart() {
              page.getByTestId("nav-cart").click();
         }
+
+        public void openHomePage() {
+            page.navigate("https://practicesoftwaretesting.com");
+        }
     }
 
     record CartLineItem(String title, int quantity, double price, double total) {}
@@ -219,19 +262,23 @@ public class PlaywrightPageObjectTest {
         }
 
         public List<CartLineItem> getLineItems() {
-            page.locator("app-cart tbody tr").waitFor();
+            page.locator("app-cart tbody tr").first().waitFor();
             return page.locator("app-cart tbody tr")
                     .all()
                     .stream()
                     .map(
                             row -> {
-                                String title = row.getByTestId("product-title").innerText();
+                                String title = trimmed(row.getByTestId("product-title").innerText());
                                 int quantity = Integer.parseInt(row.getByTestId("product-quantity").inputValue());
                                 double price = Double.parseDouble(price(row.getByTestId("product-price").innerText()));
                                 double linePrice = Double.parseDouble(price(row.getByTestId("line-price").innerText()));
                                 return new CartLineItem(title, quantity, price, linePrice);
                             }
                     ).toList();
+        }
+
+        private String trimmed(String value) {
+            return value.strip().replaceAll("\u00A0", "");
         }
     }
 
