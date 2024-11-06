@@ -1,11 +1,6 @@
 package com.serenitydojo.playwright;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.RequestOptions;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -37,6 +32,10 @@ public class PlaywrightRestAPITest {
     void setUp() {
         browserContext = browser.newContext();
         page = browserContext.newPage();
+
+        page.navigate("https://practicesoftwaretesting.com");
+        page.getByTestId("product-name").waitFor();
+
     }
 
     @AfterEach
@@ -57,40 +56,44 @@ public class PlaywrightRestAPITest {
         @Test
         @DisplayName("When a search returns a single product")
         void whenASingleItemIsFound() {
+            page.route("**/products/search?q=pliers",
+                    route -> route.fulfill(new Route.FulfillOptions()
+                            .setBody(MockSearchResponses.RESPONSE_WITH_A_SINGLE_ENTRY)
+                            .setStatus(200))
+            );
 
-            // /products/search?q=Pliers
-            page.route("**/products/search?q=Pliers", route -> {
-                route.fulfill(
-                        new Route.FulfillOptions()
-                                .setBody(MockSearchResponses.RESPONSE_WITH_A_SINGLE_ENTRY)
-                                .setStatus(200)
-                );
+            var searchBox = page.getByPlaceholder("Search");
+            searchBox.waitFor(); // Wait for element to be ready
+            searchBox.fill("pliers");
+            searchBox.press("Enter");
+
+            page.waitForResponse("**/products/search?q=pliers", () -> {
             });
-            page.navigate("https://practicesoftwaretesting.com");
-            page.getByPlaceholder("Search").fill("Pliers");
-            page.getByPlaceholder("Search").press("Enter");
 
             assertThat(page.getByTestId("product-name")).hasCount(1);
-            assertThat(page.getByTestId("product-name")).hasText("Super Pliers");
+            assertThat(page.getByTestId("product-name")
+                    .filter(new Locator.FilterOptions().setHasText("Super Pliers")))
+                    .isVisible();
         }
 
         @Test
         @DisplayName("When a search returns no products")
         void whenNoItemsAreFound() {
-            page.route("**/products/search?q=Pliers", route -> {
-                route.fulfill(
-                        new Route.FulfillOptions()
-                                .setBody(MockSearchResponses.RESPONSE_WITH_NO_ENTRIES)
-                                .setStatus(200)
-                );
+            page.route("**/products/search?q=pliers",
+                    route -> route.fulfill(new Route.FulfillOptions()
+                            .setBody(MockSearchResponses.RESPONSE_WITH_NO_ENTRIES)
+                            .setStatus(200))
+            );
+            var searchBox = page.getByPlaceholder("Search");
+            searchBox.waitFor(); // Wait for element to be ready
+            searchBox.fill("pliers");
+            searchBox.press("Enter");
+
+            page.waitForResponse("**/products/search?q=pliers", () -> {
             });
-            page.navigate("https://practicesoftwaretesting.com");
-            page.getByPlaceholder("Search").fill("Pliers");
-            page.getByPlaceholder("Search").press("Enter");
 
-            assertThat(page.getByTestId("product-name")).hasCount(0);
+            assertThat(page.getByTestId("product-name")).isHidden();
             assertThat(page.getByTestId("search_completed")).hasText("There are no products found.");
-
         }
     }
 }
