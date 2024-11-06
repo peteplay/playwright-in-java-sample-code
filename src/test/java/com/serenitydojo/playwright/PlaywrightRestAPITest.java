@@ -23,7 +23,7 @@ public class PlaywrightRestAPITest {
         playwright = Playwright.create();
         playwright.selectors().setTestIdAttribute("data-test");
         browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(false)
+                new BrowserType.LaunchOptions().setHeadless(true)
                         .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
         );
     }
@@ -34,7 +34,7 @@ public class PlaywrightRestAPITest {
         page = browserContext.newPage();
 
         page.navigate("https://practicesoftwaretesting.com");
-        page.getByTestId("product-name").waitFor();
+        page.getByPlaceholder("Search").waitFor();
 
     }
 
@@ -63,12 +63,8 @@ public class PlaywrightRestAPITest {
             );
 
             var searchBox = page.getByPlaceholder("Search");
-            searchBox.waitFor(); // Wait for element to be ready
             searchBox.fill("pliers");
             searchBox.press("Enter");
-
-            page.waitForResponse("**/products/search?q=pliers", () -> {
-            });
 
             assertThat(page.getByTestId("product-name")).hasCount(1);
             assertThat(page.getByTestId("product-name")
@@ -85,12 +81,8 @@ public class PlaywrightRestAPITest {
                             .setStatus(200))
             );
             var searchBox = page.getByPlaceholder("Search");
-            searchBox.waitFor(); // Wait for element to be ready
             searchBox.fill("pliers");
             searchBox.press("Enter");
-
-            page.waitForResponse("**/products/search?q=pliers", () -> {
-            });
 
             assertThat(page.getByTestId("product-name")).isHidden();
             assertThat(page.getByTestId("search_completed")).hasText("There are no products found.");
