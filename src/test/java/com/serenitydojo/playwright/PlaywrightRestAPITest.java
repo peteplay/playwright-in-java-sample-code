@@ -1,11 +1,6 @@
 package com.serenitydojo.playwright;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.RequestOptions;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -28,7 +23,7 @@ public class PlaywrightRestAPITest {
         playwright = Playwright.create();
         playwright.selectors().setTestIdAttribute("data-test");
         browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(true)
+                new BrowserType.LaunchOptions().setHeadless(false)
                         .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
         );
     }
@@ -37,6 +32,10 @@ public class PlaywrightRestAPITest {
     void setUp() {
         browserContext = browser.newContext();
         page = browserContext.newPage();
+
+        page.navigate("https://practicesoftwaretesting.com");
+        page.getByTestId("product-name").waitFor();
+
     }
 
     @AfterEach
@@ -48,16 +47,6 @@ public class PlaywrightRestAPITest {
     static void tearDown() {
         browser.close();
         playwright.close();
-    }
-
-    @BeforeEach
-    void openHomePage() {
-        page.route("**/products/search?q=pliers",
-                route -> route.fulfill(new Route.FulfillOptions()
-                        .setBody("{\"message\": \"Internal Server Error\"}")
-                        .setStatus(404))
-        );
-        page.navigate("https://practicesoftwaretesting.com");
     }
 
     @DisplayName("Playwright allows us to mock out API responses")
@@ -73,9 +62,13 @@ public class PlaywrightRestAPITest {
                             .setStatus(200))
             );
 
-            page.navigate("https://practicesoftwaretesting.com");
-            page.getByPlaceholder("Search").fill("pliers");
-            page.getByPlaceholder("Search").press("Enter");
+            var searchBox = page.getByPlaceholder("Search");
+            searchBox.waitFor(); // Wait for element to be ready
+            searchBox.fill("pliers");
+            searchBox.press("Enter");
+
+            page.waitForResponse("**/products/search?q=pliers", () -> {
+            });
 
             assertThat(page.getByTestId("product-name")).hasCount(1);
             assertThat(page.getByTestId("product-name")
@@ -91,10 +84,13 @@ public class PlaywrightRestAPITest {
                             .setBody(MockSearchResponses.RESPONSE_WITH_NO_ENTRIES)
                             .setStatus(200))
             );
+            var searchBox = page.getByPlaceholder("Search");
+            searchBox.waitFor(); // Wait for element to be ready
+            searchBox.fill("pliers");
+            searchBox.press("Enter");
 
-            page.navigate("https://practicesoftwaretesting.com");
-            page.getByPlaceholder("Search").fill("pliers");
-            page.getByPlaceholder("Search").press("Enter");
+            page.waitForResponse("**/products/search?q=pliers", () -> {
+            });
 
             assertThat(page.getByTestId("product-name")).isHidden();
             assertThat(page.getByTestId("search_completed")).hasText("There are no products found.");
