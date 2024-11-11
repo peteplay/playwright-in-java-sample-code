@@ -6,8 +6,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -17,7 +15,6 @@ import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-@Execution(ExecutionMode.SAME_THREAD)
 public class ContactFormTest extends PlaywrightTestCase {
 
     ContactForm contactForm;
@@ -71,7 +68,7 @@ public class ContactFormTest extends PlaywrightTestCase {
 
     @DisplayName("The message must be at least 50 characters long")
     @Test
-    void messageField() {
+    void messageTooShort() {
 
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
@@ -80,9 +77,24 @@ public class ContactFormTest extends PlaywrightTestCase {
         contactForm.selectSubject("Warranty");
 
         contactForm.submitForm();
-        ;
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
+    }
+
+    @DisplayName("The email address must be correctly formatted")
+    @ParameterizedTest
+    @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})
+    void invalidEmailField(String invalidEmail) {
+
+        contactForm.setFirstName("Sarah-Jane");
+        contactForm.setLastName("Smith");
+        contactForm.setEmail(invalidEmail);
+        contactForm.setMessage("A very long message to the warranty service about a warranty on a product!");
+        contactForm.selectSubject("Warranty");
+
+        contactForm.submitForm();
+
+        assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");
     }
 
 
