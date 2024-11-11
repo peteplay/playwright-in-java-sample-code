@@ -4,10 +4,12 @@ import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@DisplayName("Shopping Cart")
 public class AddToCartTest extends PlaywrightTestCase {
 
     SearchComponent searchComponent;
@@ -31,6 +33,7 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @Test
+    @DisplayName("Checking out a single item")
     void whenCheckingOutASingleItem() {
         searchComponent.searchBy("pliers");
         productList.viewProductDetails("Combination Pliers");
@@ -53,8 +56,10 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @Test
+    @DisplayName("Checking out multiple items")
     void whenCheckingOutMultipleItems() {
         navBar.openHomePage();
+
         productList.viewProductDetails("Bolt Cutters");
         productDetails.increaseQuanityBy(2);
         productDetails.addToCart();

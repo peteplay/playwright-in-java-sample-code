@@ -1,7 +1,9 @@
 package com.serenitydojo.playwright.toolshop.contact;
 
 import com.microsoft.playwright.options.AriaRole;
+import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
+import io.qameta.allure.Allure;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,15 +17,18 @@ import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+@DisplayName("Contact form")
 public class ContactFormTest extends PlaywrightTestCase {
 
     ContactForm contactForm;
+    NavBar navigate;
 
     @DisplayName("When submitting a request")
     @BeforeEach
     void openContactPage() {
         contactForm = new ContactForm(page);
-        page.navigate("https://practicesoftwaretesting.com/contact");
+        navigate = new NavBar(page);
+        navigate.toTheContactPage();
     }
 
     @DisplayName("Customers can use the contact form to contact us")
@@ -48,6 +53,8 @@ public class ContactFormTest extends PlaywrightTestCase {
     @ParameterizedTest
     @ValueSource(strings = {"First name", "Last name", "Email", "Message"})
     void mandatoryFields(String fieldName) {
+        Allure.parameter("fieldName", fieldName);
+
         // Fill in the field values
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
@@ -85,6 +92,7 @@ public class ContactFormTest extends PlaywrightTestCase {
     @ParameterizedTest
     @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})
     void invalidEmailField(String invalidEmail) {
+        Allure.parameter("invalidEmail", invalidEmail);
 
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
