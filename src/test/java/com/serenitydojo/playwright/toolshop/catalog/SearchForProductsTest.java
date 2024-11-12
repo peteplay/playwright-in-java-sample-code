@@ -3,6 +3,8 @@ package com.serenitydojo.playwright.toolshop.catalog;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.ProductList;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.SearchComponent;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Searching for products")
+@Feature("Searching for products")
 public class SearchForProductsTest extends PlaywrightTestCase {
 
     @BeforeEach
@@ -19,6 +22,7 @@ public class SearchForProductsTest extends PlaywrightTestCase {
 
     @Nested
     @DisplayName("Searching by keyword")
+    @Story("Searching by keyword")
     class SearchingByKeyword {
 
         @Test
@@ -62,5 +66,6 @@ public class SearchForProductsTest extends PlaywrightTestCase {
             var matchingProducts = productList.getProductNames();
             Assertions.assertThat(matchingProducts).hasSize(9);
         }
+
     }
 }

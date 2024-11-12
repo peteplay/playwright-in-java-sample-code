@@ -4,6 +4,8 @@ import com.microsoft.playwright.options.AriaRole;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,12 +20,12 @@ import java.nio.file.Paths;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @DisplayName("Contact form")
+@Feature("Contact form")
 public class ContactFormTest extends PlaywrightTestCase {
 
     ContactForm contactForm;
     NavBar navigate;
 
-    @DisplayName("When submitting a request")
     @BeforeEach
     void openContactPage() {
         contactForm = new ContactForm(page);
@@ -31,6 +33,7 @@ public class ContactFormTest extends PlaywrightTestCase {
         navigate.toTheContactPage();
     }
 
+    @Story("Submitting a request")
     @DisplayName("Customers can use the contact form to contact us")
     @Test
     void completeForm() throws URISyntaxException {
@@ -49,12 +52,11 @@ public class ContactFormTest extends PlaywrightTestCase {
                 .contains("Thanks for your message! We will contact you shortly.");
     }
 
+    @Story("Submitting a request")
     @DisplayName("First name, last name, email and message are mandatory")
-    @ParameterizedTest
+    @ParameterizedTest(name = "{arguments} is a mandatory field")
     @ValueSource(strings = {"First name", "Last name", "Email", "Message"})
     void mandatoryFields(String fieldName) {
-        Allure.parameter("fieldName", fieldName);
-
         // Fill in the field values
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
@@ -73,6 +75,7 @@ public class ContactFormTest extends PlaywrightTestCase {
         assertThat(errorMessage).isVisible();
     }
 
+    @Story("Submitting a request")
     @DisplayName("The message must be at least 50 characters long")
     @Test
     void messageTooShort() {
@@ -88,12 +91,11 @@ public class ContactFormTest extends PlaywrightTestCase {
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
     }
 
+    @Story("Submitting a request")
     @DisplayName("The email address must be correctly formatted")
-    @ParameterizedTest
+    @ParameterizedTest(name = "'{arguments}' should be rejected")
     @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})
     void invalidEmailField(String invalidEmail) {
-        Allure.parameter("invalidEmail", invalidEmail);
-
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
         contactForm.setEmail(invalidEmail);
@@ -104,6 +106,4 @@ public class ContactFormTest extends PlaywrightTestCase {
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");
     }
-
-
 }
