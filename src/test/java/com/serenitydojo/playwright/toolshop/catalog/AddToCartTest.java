@@ -2,6 +2,8 @@ package com.serenitydojo.playwright.toolshop.catalog;
 
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 @DisplayName("Shopping Cart")
+@Feature("Shopping Cart")
 public class AddToCartTest extends PlaywrightTestCase {
 
     SearchComponent searchComponent;
@@ -33,6 +36,7 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @Test
+    @Story("Check out")
     @DisplayName("Checking out a single item")
     void whenCheckingOutASingleItem() {
         searchComponent.searchBy("pliers");
@@ -56,6 +60,7 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @Test
+    @Story("Check out")
     @DisplayName("Checking out multiple items")
     void whenCheckingOutMultipleItems() {
         navBar.openHomePage();
