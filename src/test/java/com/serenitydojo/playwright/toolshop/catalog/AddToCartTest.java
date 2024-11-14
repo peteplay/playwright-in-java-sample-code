@@ -3,6 +3,7 @@ package com.serenitydojo.playwright.toolshop.catalog;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,7 @@ public class AddToCartTest extends PlaywrightTestCase {
 
     @BeforeEach
     void openHomePage() {
-        page.navigate("https://practicesoftwaretesting.com");
+        navBar.openHomePage();
     }
 
     @BeforeEach
@@ -36,7 +37,7 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @Test
-    @Story("Check out")
+    @Story("Checking out a product")
     @DisplayName("Checking out a single item")
     void whenCheckingOutASingleItem() {
         searchComponent.searchBy("pliers");
@@ -60,7 +61,7 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @Test
-    @Story("Check out")
+    @Story("Checking out a product")
     @DisplayName("Checking out multiple items")
     void whenCheckingOutMultipleItems() {
         navBar.openHomePage();

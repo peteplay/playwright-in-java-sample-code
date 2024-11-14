@@ -1,10 +1,13 @@
 package com.serenitydojo.playwright.toolshop.fixtures;
 
 import com.microsoft.playwright.*;
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.ByteArrayInputStream;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public abstract class PlaywrightTestCase {
@@ -21,7 +24,7 @@ public abstract class PlaywrightTestCase {
         playwright.get().chromium().launch(
                 new BrowserType.LaunchOptions()
                         .setHeadless(true)
-                        .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
+                       .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
         )
     );
 
@@ -37,6 +40,7 @@ public abstract class PlaywrightTestCase {
 
     @AfterEach
     void closeContext() {
+        ScreenshotManager.takeScreenshot(page, "End of test");
         browserContext.close();
     }
 
@@ -48,5 +52,4 @@ public abstract class PlaywrightTestCase {
         playwright.get().close();
         playwright.remove();
     }
-
 }

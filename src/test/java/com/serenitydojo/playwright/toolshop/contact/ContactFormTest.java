@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @DisplayName("Contact form")
-@Feature("Contact form")
+@Feature("Contacts")
 public class ContactFormTest extends PlaywrightTestCase {
 
     ContactForm contactForm;
@@ -33,7 +33,7 @@ public class ContactFormTest extends PlaywrightTestCase {
         navigate.toTheContactPage();
     }
 
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("Customers can use the contact form to contact us")
     @Test
     void completeForm() throws URISyntaxException {
@@ -52,7 +52,7 @@ public class ContactFormTest extends PlaywrightTestCase {
                 .contains("Thanks for your message! We will contact you shortly.");
     }
 
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("First name, last name, email and message are mandatory")
     @ParameterizedTest(name = "{arguments} is a mandatory field")
     @ValueSource(strings = {"First name", "Last name", "Email", "Message"})
@@ -75,7 +75,7 @@ public class ContactFormTest extends PlaywrightTestCase {
         assertThat(errorMessage).isVisible();
     }
 
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("The message must be at least 50 characters long")
     @Test
     void messageTooShort() {
@@ -91,7 +91,7 @@ public class ContactFormTest extends PlaywrightTestCase {
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
     }
 
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("The email address must be correctly formatted")
     @ParameterizedTest(name = "'{arguments}' should be rejected")
     @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})

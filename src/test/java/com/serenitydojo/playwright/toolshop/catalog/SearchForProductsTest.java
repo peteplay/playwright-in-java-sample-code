@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Searching for products")
-@Feature("Searching for products")
+@Feature("Product Catalog")
 public class SearchForProductsTest extends PlaywrightTestCase {
 
     @BeforeEach
@@ -22,7 +22,7 @@ public class SearchForProductsTest extends PlaywrightTestCase {
 
     @Nested
     @DisplayName("Searching by keyword")
-    @Story("Searching by keyword")
+    @Story("Searching for products")
     class SearchingByKeyword {
 
         @Test
@@ -66,6 +66,5 @@ public class SearchForProductsTest extends PlaywrightTestCase {
             var matchingProducts = productList.getProductNames();
             Assertions.assertThat(matchingProducts).hasSize(9);
         }
-
     }
 }
