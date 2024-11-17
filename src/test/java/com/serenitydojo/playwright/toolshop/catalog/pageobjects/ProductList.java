@@ -1,6 +1,7 @@
 package com.serenitydojo.playwright.toolshop.catalog.pageobjects;
 
 import com.microsoft.playwright.Page;
+import com.serenitydojo.playwright.toolshop.fixtures.ProductSummary;
 import io.qameta.allure.Step;
 
 import java.util.List;
@@ -15,6 +16,16 @@ public class ProductList {
 
     public List<String> getProductNames() {
         return page.getByTestId("product-name").allInnerTexts();
+    }
+
+    public List<ProductSummary> getProductSummaries() {
+        return page.locator(".card").all()
+                .stream()
+                .map(productCard -> {
+                    String productName = productCard.getByTestId("product-name").textContent().strip();
+                    String productPrice = productCard.getByTestId("product-price").textContent();
+                    return new ProductSummary(productName, productPrice);
+                }).toList();
     }
 
     @Step("View product details")
