@@ -49,6 +49,7 @@ The table below maps each Git branch in this repository to its corresponding Ude
 | Module 14  | `sample-code/module-14-organizing-your-tests`    | [Organizing Your Tests](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46833089#overview)           |
 | Module 15  | `sample-code/module-15-parallel-execution`       | [Parallel Execution](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46835495#overview)              |
 | Module 16  | `sample-code/module-16-allure-reporting`         | [Allure Reporting](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46849301#overview)                |
+| Module 17  | `sample-code/module-17-cucumber`                 | [Cucumber](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46906341#overview)                        |
 
 ---
 
@@ -60,23 +61,23 @@ The exercises in this repository are designed to build on each other in a sequen
 Begin your journey into Playwright and Java test automation by setting up your workspace. You have two options to start:
 
 1. **Use the `sample-code/start-here` branch:**
-This branch contains a basic starting point with all the necessary configuration files (like a Maven pom.xml file) to help you get started quickly.
+   This branch contains a basic starting point with all the necessary configuration files (like a Maven pom.xml file) to help you get started quickly.
 2. **Start with an empty Maven project:**
-If you prefer to set up everything from scratch, you can create your own Maven project and follow along with the course to configure it step by step. This approach is great for reinforcing your understanding of the setup process.
+   If you prefer to set up everything from scratch, you can create your own Maven project and follow along with the course to configure it step by step. This approach is great for reinforcing your understanding of the setup process.
 
 ### Step 2: Follow Along With the Coding Exercises
 Each course module introduces new concepts and techniques, with corresponding exercises for hands-on practice. Follow these steps as you progress:
 
 1. **Follow the Exercises in Order:**
-The modules are designed to build upon each other. Completing them in order ensures you gain a solid understanding of each concept before moving to the next.
+   The modules are designed to build upon each other. Completing them in order ensures you gain a solid understanding of each concept before moving to the next.
 2. **Reference the Module-Specific Sample Code:**
-Each module's sample code is available in the corresponding branch, named sample-code/<module-name>. For example:
+   Each module's sample code is available in the corresponding branch, named sample-code/<module-name>. For example:
    - sample-code/module-3-my-first-playwright-test
    - sample-code/module-6-browser-options
-You can check out these branches to view the sample solution for each module if you get stuck or want to see how the exercises are implemented.
+     You can check out these branches to view the sample solution for each module if you get stuck or want to see how the exercises are implemented.
 
 3. **Work on the Exercises in Your Own Branch:**
-Create your own branch to experiment with the exercises. For example:
+   Create your own branch to experiment with the exercises. For example:
 ```bash
 git checkout -b module-3-exercises
 ```
@@ -88,43 +89,43 @@ Feel free to submit pull requests or raise issues if you find bugs or areas for 
 If you encounter challenges while working through an exercise:
 
 1. Check the Sample Solution:
-Switch to the branch for the current module to review the sample code and compare it with your own:
+   Switch to the branch for the current module to review the sample code and compare it with your own:
 ```bash
 git checkout sample-code/<module-name>
 ```
 
 2. **Learn From the Solution:**
-Pay attention to how the concepts are applied and implemented. Take note of any differences between your code and the solution, and try to understand why those differences exist. 
+   Pay attention to how the concepts are applied and implemented. Take note of any differences between your code and the solution, and try to understand why those differences exist.
 
 ### **Step 4: Starting Fresh at Any Point**
 If you want to start over or reset your work for a specific module:
 
 1. **Checkout the Previous Module's Sample Code:**
-Each module builds on the previous one, and the starting point for a module is the final state of the previous module. For example:
-If you are working on Module 5 and want to start fresh, check out the code from sample-code/module-4-interacting-with-elements.
-Use the following command:
+   Each module builds on the previous one, and the starting point for a module is the final state of the previous module. For example:
+   If you are working on Module 5 and want to start fresh, check out the code from sample-code/module-4-interacting-with-elements.
+   Use the following command:
 ```bash
 git checkout sample-code/<previous-module-name>
 ```
 
 2. **Create a New Branch From the Previous Module:**
-After checking out the previous module's sample code, create a new branch to start your work:
+   After checking out the previous module's sample code, create a new branch to start your work:
 ```bash
 git checkout -b module-5-exercises
 ```
 
 3. **Continue From the Reset State:**
-Use the previous module's code as the starting point for the new module, and continue with the exercises.
+   Use the previous module's code as the starting point for the new module, and continue with the exercises.
 
 
 ### Step 5: Submitting Your Work
 If you are following along as part of the [Serenity Dojo coaching program](http://serenitydojo.academy), you will be able to get feedback about your work from one of the Serenity Dojo coaches. Here is how you do that:
 
 1. Push Your Changes to Your Repository:
-Push your completed exercises to your forked repository to save your work:
+   Push your completed exercises to your forked repository to save your work:
 ```bash
 git push origin <your-branch-name>
 ```
 
 2. Share Your Branch:
-If requested, share the branch link with your instructor or team for review.
+   If requested, share the branch link with your instructor or team for review.
