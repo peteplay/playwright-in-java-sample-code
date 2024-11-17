@@ -1,6 +1,6 @@
 # Mastering Modern Test Automation With Playwright In Java
 
-This repository contains the sample code for the **Mastering Modern Test Automation With Playwright In Java** course. It is designed to complement your learning experience, providing hands-on examples and exercises for each module of the course.
+This repository contains the sample code for the **[Mastering Modern Test Automation With Playwright In Java](https://www.udemy.com/course/serenity-bdd-web-testing/?referralCode=3E5878CF6F4676EF507B)** course. It is designed to complement your learning experience, providing hands-on examples and exercises for each module of the course.
 
 ## About the Course
 
