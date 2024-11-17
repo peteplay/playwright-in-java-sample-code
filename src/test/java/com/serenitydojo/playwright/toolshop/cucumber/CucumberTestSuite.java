@@ -7,11 +7,12 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@ConfigurationParameter(key="cucumber.plugin",
-        value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, " +
-                "pretty, " +
-                "html:target/cucumber-reports/cucumber.html, " +
-                "json:target/cucumber-reports/cucumber.json")
 @SelectClasspathResource("/features")
-public class AcceptanceTestSuite {
+@ConfigurationParameter(
+        key="cucumber.plugin",
+        value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm," +
+                "pretty," +
+                "html:target/cucumber-reports/cucumber.html"
+)
+public class CucumberTestSuite {
 }
