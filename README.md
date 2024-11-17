@@ -1,6 +1,6 @@
 # Mastering Modern Test Automation With Playwright In Java
 
-This repository contains the sample code for the **[Mastering Modern Test Automation With Playwright In Java](https://www.udemy.com/course/serenity-bdd-web-testing/?referralCode=3E5878CF6F4676EF507B)** course. It is designed to complement your learning experience, providing hands-on examples and exercises for each module of the course.
+This repository contains the sample code for the **[Mastering Modern Test Automation With Playwright In Java](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/?referralCode=06560D474D519B88409D)** course. It is designed to complement your learning experience, providing hands-on examples and exercises for each module of the course.
 
 ## About the Course
 
@@ -22,23 +22,32 @@ You’ll learn:
 - Leveraging AI tools to accelerate test writing
 
 ### Access the Course Material
-Enroll in the course and access all the learning resources here: [Mastering Modern Test Automation With Playwright In Java](https://www.udemy.com/course/serenity-bdd-web-testing/?referralCode=3E5878CF6F4676EF507B)
+Enroll in the course and access all the learning resources here: [Mastering Modern Test Automation With Playwright In Java](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/?referralCode=06560D474D519B88409D)
 
 ---
 
-## Repository Structure
+## Git Branches and Corresponding Udemy Course Modules
 
 The branch structure of this repository follows the convention `sample-code/<module-name>`. Each branch corresponds to a module in the course and contains the sample code for that specific topic. Some of the module branches include:
 
-- `sample-code/module-3-my-first-playwright-test`
-- `sample-code/module-4-interacting-with-elements`
-- `sample-code/module-6-browser-options`
-- `sample-code/module-7-browser-contexts`
-- `sample-code/module-10-assertions`
-- `sample-code/module-14-parallel-execution`
-- `sample-code/module-17-cucumber`
+The table below maps each Git branch in this repository to its corresponding Udemy course module. Click the links to access the relevant lecture directly.
 
-You can check out the branch for a specific module to view the corresponding sample code.
+| **Module** | **Git Branch**                              | **Udemy Lecture Link**                                                                                                                                   |
+|------------|---------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Module 3   | `sample-code/module-3-my-first-playwright-test` | [My First Playwright Test](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46077299#overview)        |
+| Module 4   | `sample-code/module-4-interacting-with-elements` | [Interacting With Field Elements](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46649323#overview) |
+| Module 5   | `sample-code/module-5-refactoring`           | [Refactoring](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46077309#overview)                     |
+| Module 6   | `sample-code/module-6-browser-options`       | [Browser Options](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46110387#overview)                 |
+| Module 7   | `sample-code/module-7-browser-contexts`      | [Browser Contexts](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46145035#overview)                |
+| Module 8   | `sample-code/module-8-locators`              | [Locators](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46178143#overview)                        |
+| Module 9   | `sample-code/module-9-forms`                 | [Forms](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46649323#overview)                           |
+| Module 10  | `sample-code/module-10-assertions`           | [Assertions](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46280267#overview)                      |
+| Module 11  | `sample-code/module-11-waits`                | [Waits](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46680609#overview)                           |
+| Module 12  | `sample-code/module-12-mocking-api-calls`    | [Mocking API Calls](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46728327#overview)               |
+| Module 13  | `sample-code/module-13-page-objects`         | [Page Objects](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46723143#overview)                    |
+| Module 14  | `sample-code/module-14-organizing-your-tests`| [Organizing Your Tests](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46833089#overview)           |
+| Module 15  | `sample-code/module-15-parallel-execution`   | [Parallel Execution](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46835495#overview)              |
+| Module 16  | `sample-code/module-16-allure-reporting`     | [Allure Reporting](https://www.udemy.com/course/mastering-modern-test-automation-with-playwright-in-java/learn/lecture/46849301#overview)                |
 
 ---
 
