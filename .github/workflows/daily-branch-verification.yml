@@ -1,0 +1,43 @@
+name: Daily Maven Verify on All Branches
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  verify-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all branches and history
+
+      - name: Get list of branches
+        id: get-branches
+        run: |
+          # List all branches except the HEAD and remove origin/ prefix
+          git fetch --all
+          git branch -r | grep -v '\->' | grep -v HEAD | grep 'origin/' | sed 's/origin\///' > branches.txt
+
+      - name: Show all branches to verify
+        run: cat branches.txt
+
+      - name: Run Maven Verify on Each Branch
+        run: |
+          while read branch; do
+            echo "Processing branch: $branch"
+          
+            # Checkout the branch
+            git checkout $branch
+          
+            # Run Maven verify
+            mvn clean verify
+          
+            if [ $? -ne 0 ]; then
+              echo "Maven verify failed on branch: $branch"
+            else
+              echo "Maven verify succeeded on branch: $branch"
+            fi
+          done < branches.txt
