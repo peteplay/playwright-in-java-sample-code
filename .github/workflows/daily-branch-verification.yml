@@ -19,7 +19,7 @@ jobs:
         run: |
           # List all branches except the HEAD and remove origin/ prefix
           git fetch --all
-          git branch -r | grep -v '\->' | grep -v HEAD | grep 'origin/' | sed 's/origin\///' > branches.txt
+          git branch -r | grep -v '\->' | grep -v HEAD | grep 'origin/sample-code' | sed 's/origin\///' > branches.txt
 
       - name: Show all branches to verify
         run: cat branches.txt
