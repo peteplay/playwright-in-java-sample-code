@@ -25,7 +25,19 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      # Step 3: Cache Maven dependencies to speed up future builds
+      # Step 3: Install Maven 3.9.9
+      - name: Install Maven 3.9.9
+        run: |
+          wget https://downloads.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
+          tar -xvzf apache-maven-3.9.9-bin.tar.gz
+          sudo mv apache-maven-3.9.9 /opt/maven
+          sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn
+
+      # Step 4: Verify Maven installation
+      - name: Verify Maven version
+        run: mvn --version
+
+      # Step 5: Cache Maven dependencies to speed up future builds
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -34,6 +46,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
-      # Step 4: Run Maven to execute Playwright tests
+      # Step 6: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: mvn verify
