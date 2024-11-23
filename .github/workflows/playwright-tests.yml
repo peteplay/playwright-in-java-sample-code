@@ -31,7 +31,7 @@ jobs:
           wget https://downloads.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
           tar -xvzf apache-maven-3.9.9-bin.tar.gz
           sudo mv apache-maven-3.9.9 /opt/maven
-          echo "export PATH=/opt/maven/bin:$PATH" >> $GITHUB_ENV
+          echo "/opt/maven/bin" >> $GITHUB_PATH
 
       # Step 4: Verify Maven installation
       - name: Verify Maven version
