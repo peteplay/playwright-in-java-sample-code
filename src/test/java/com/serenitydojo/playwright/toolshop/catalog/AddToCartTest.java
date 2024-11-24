@@ -54,7 +54,7 @@ public class AddToCartTest {
 
     @AfterEach
     void recordTrace(TestInfo testInfo, BrowserContext context) {
-        String traceName = testInfo.getDisplayName().replace(" ","-");
+        String traceName = testInfo.getDisplayName().replace(" ","-").toLowerCase();
         context.tracing().stop(
                 new Tracing.StopOptions()
                         .setPath(Paths.get("trace-" + traceName + ".zip"))
