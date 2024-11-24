@@ -53,7 +53,7 @@ public class ContactFormTest {
         String traceName = testInfo.getDisplayName().replace(" ","-").toLowerCase();
         context.tracing().stop(
                 new Tracing.StopOptions()
-                        .setPath(Paths.get("trace-" + traceName + ".zip"))
+                        .setPath(Paths.get("target/trace-" + traceName + ".zip"))
         );
     }
 
