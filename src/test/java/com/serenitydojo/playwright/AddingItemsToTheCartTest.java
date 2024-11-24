@@ -1,17 +1,13 @@
 package com.serenitydojo.playwright;
 
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.SelectOption;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -28,7 +24,7 @@ public class AddingItemsToTheCartTest {
         page.getByPlaceholder("Search").press("Enter");
 
         page.waitForLoadState();
-        page.waitForCondition( () ->  page.getByTestId("product-name").count() > 0);
+        page.waitForCondition(() -> page.getByTestId("product-name").count() > 0);
 
         List<String> products = page.getByTestId("product-name").allTextContents();
         Assertions.assertThat(products.get(0)).containsIgnoringCase("Pliers");
