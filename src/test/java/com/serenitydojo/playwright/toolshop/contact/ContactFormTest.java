@@ -140,9 +140,4 @@ public class ContactFormTest implements RecordsAllureScreenshots {
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");
     }
-
-//    @AfterEach
-//    public void tearDown(Page page) {
-//        Allure.addAttachment("End of Test Screenshot", new ByteArrayInputStream(page.screenshot()));
-//    }
 }
