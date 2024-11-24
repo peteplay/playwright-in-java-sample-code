@@ -18,6 +18,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       # Step 2: Set up JDK 17 (adjust if you're using a different version)
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -47,6 +52,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
-      # Step 4: Run Maven to execute Playwright tests
+      - name: Install Playwright dependencies
+        run: npx playwright install-deps
+
+      # Step 6: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: mvn verify
