@@ -50,6 +50,7 @@ public class ContactForm {
     }
 
     public void submitForm() {
+        page.waitForTimeout(250);
         sendButton.click();
     }
 
