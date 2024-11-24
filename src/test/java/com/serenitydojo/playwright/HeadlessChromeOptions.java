@@ -1,8 +1,12 @@
 package com.serenitydojo.playwright;
 
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.Options;
 import com.microsoft.playwright.junit.OptionsFactory;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Arrays;
 
@@ -15,4 +19,5 @@ public class HeadlessChromeOptions implements OptionsFactory {
                 ).setHeadless(true)
                 .setTestIdAttribute("data-test");
     }
+
 }
