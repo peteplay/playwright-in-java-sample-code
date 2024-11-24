@@ -12,6 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
@@ -52,10 +53,11 @@ public class AddToCartTest {
     }
 
     @AfterEach
-    void recordTrace(BrowserContext context) {
+    void recordTrace(TestInfo testInfo, BrowserContext context) {
+        String traceName = testInfo.getDisplayName().replace(" ","-");
         context.tracing().stop(
                 new Tracing.StopOptions()
-                        .setPath(Paths.get("trace.zip"))
+                        .setPath(Paths.get("trace-" + traceName + ".zip"))
         );
     }
 
