@@ -16,7 +16,12 @@ jobs:
     steps:
       # Step 1: Check out the repository code
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
       # Step 2: Set up JDK 17 (adjust if you're using a different version)
       - name: Set up JDK 17
@@ -47,7 +52,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
-      # Step 4: Run Maven to execute Playwright tests
+      - name: Install Playwright dependencies
+        run: npx playwright install-deps
+
+      # Step 6: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: mvn verify
 
@@ -61,23 +69,9 @@ jobs:
           path: 'target/*.zip'
 
       # Step 8: Deploy Allure report to GitHub Pages
-#      - name: Deploy Allure Report to GitHub Pages
-#        if: always()  # Ensure this step runs even if tests fail
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_dir: target/site/allure-maven-plugin
-
-        # Step 8: Upload Test Results (e.g., HTML reports)
-      - name: Upload Playwright Test Results
-        run: |
-         mkdir -p artifacts
-         cp -r target/site/allure-maven-plugin/* artifacts/
-        if: success() # Run only if the tests pass
-        continue-on-error: false
-  #
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()  # Ensure this step runs even if tests fail
+        uses: peaceiris/actions-gh-pages@v3
         with:
-           # Optionally customize the directory if needed
-          folder: artifacts # Deploy the artifacts folder to Pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: target/site/allure-maven-plugin
