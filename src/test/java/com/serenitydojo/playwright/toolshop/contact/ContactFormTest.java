@@ -9,6 +9,7 @@ import com.serenitydojo.playwright.HeadlessChromeOptions;
 import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -70,11 +71,14 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         Path fileToUpload = Paths.get(ClassLoader.getSystemResource("data/sample-data.txt").toURI());
         contactForm.setAttachment(fileToUpload);
 
-        recordScreenshot(page, "Submit form");
-        contactForm.submitForm();
-
         Assertions.assertThat(contactForm.getAlertMessage())
                 .contains("Thanks for your message! We will contact you shortly.");
+    }
+
+    @Step
+    void submitTheForm(Page page) {
+        recordScreenshot(page, "Submit form");
+        contactForm.submitForm();
     }
 
     @Story("Submitting a request")
@@ -92,7 +96,7 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         // Clear one of the fields
         contactForm.clearField(fieldName);
 
-        contactForm.submitForm();
+        submitTheForm(page);
 
         // Check the error message for that field
         var errorMessage = page.getByRole(AriaRole.ALERT).getByText(fieldName + " is required");
@@ -111,7 +115,7 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         contactForm.setMessage("A short long message.");
         contactForm.selectSubject("Warranty");
 
-        contactForm.submitForm();
+        submitTheForm(page);
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
     }
@@ -127,7 +131,7 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         contactForm.setMessage("A very long message to the warranty service about a warranty on a product!");
         contactForm.selectSubject("Warranty");
 
-        contactForm.submitForm();
+        submitTheForm(page);
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");
     }
