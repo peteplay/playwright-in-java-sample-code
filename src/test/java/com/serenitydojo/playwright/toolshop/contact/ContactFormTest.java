@@ -1,6 +1,8 @@
 package com.serenitydojo.playwright.toolshop.contact;
 
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
 import com.serenitydojo.playwright.HeadlessChromeOptions;
@@ -10,9 +12,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -35,6 +35,26 @@ public class ContactFormTest {
         contactForm = new ContactForm(page);
         navigate = new NavBar(page);
         navigate.toTheContactPage();
+    }
+
+
+    @BeforeEach
+    void setupTrace(BrowserContext context) {
+        context.tracing().start(
+                new Tracing.StartOptions()
+                        .setScreenshots(true)
+                        .setSnapshots(true)
+                        .setSources(true)
+        );
+    }
+
+    @AfterEach
+    void recordTrace(TestInfo testInfo, BrowserContext context) {
+        String traceName = testInfo.getDisplayName().replace(" ","-").toLowerCase();
+        context.tracing().stop(
+                new Tracing.StopOptions()
+                        .setPath(Paths.get("trace-" + traceName + ".zip"))
+        );
     }
 
     @Story("Submitting a request")

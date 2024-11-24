@@ -50,3 +50,12 @@ jobs:
       # Step 4: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: mvn verify
+
+
+      # Step 7: Archive ZIP files in the root directory
+      - name: Archive ZIP files
+        if: always()  # Ensure this step runs even if previous steps fail
+        uses: actions/upload-artifact@v3
+        with:
+          name: zip-archives
+          path: '*.zip'
