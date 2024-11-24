@@ -120,13 +120,6 @@ allure.api.addTranslation('isv', {
     }
 });
 
-allure.api.addTranslation('ka', {
-    tab: {
-        packages: {
-            name: 'პაკეტები'
-        }
-    }
-});
 allure.api.addTab('packages', {
     title: 'tab.packages.name', icon: 'fa fa-align-left',
     route: 'packages(/)(:testGroup)(/)(:testResult)(/)(:testResultTab)(/)',
