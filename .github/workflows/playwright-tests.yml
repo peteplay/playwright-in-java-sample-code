@@ -61,9 +61,23 @@ jobs:
           path: 'target/*.zip'
 
       # Step 8: Deploy Allure report to GitHub Pages
-      - name: Deploy Allure Report to GitHub Pages
-        if: always()  # Ensure this step runs even if tests fail
-        uses: peaceiris/actions-gh-pages@v3
+#      - name: Deploy Allure Report to GitHub Pages
+#        if: always()  # Ensure this step runs even if tests fail
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_dir: target/site/allure-maven-plugin
+
+        # Step 8: Upload Test Results (e.g., HTML reports)
+      - name: Upload Playwright Test Results
+        run: |
+         mkdir -p artifacts
+         cp -r target/site/allure-maven-plugin/* artifacts/
+        if: success() # Run only if the tests pass
+        continue-on-error: false
+  #
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: target/site/allure-maven-plugin
+           # Optionally customize the directory if needed
+          folder: artifacts # Deploy the artifacts folder to Pages
