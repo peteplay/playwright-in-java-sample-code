@@ -57,6 +57,7 @@ public class ContactFormTest {
         );
     }
 
+
     @Story("Submitting a request")
     @DisplayName("Customers can use the contact form to contact us")
     @Test
