@@ -1,5 +1,8 @@
 package com.serenitydojo.playwright.toolshop.catalog;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.UsePlaywright;
+import com.serenitydojo.playwright.HeadlessChromeOptions;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
 import org.assertj.core.api.Assertions;
@@ -8,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class AddToCartTest extends PlaywrightTestCase {
+@UsePlaywright(HeadlessChromeOptions.class)
+public class AddToCartTest {
 
     SearchComponent searchComponent;
     ProductList productList;
@@ -17,12 +21,12 @@ public class AddToCartTest extends PlaywrightTestCase {
     CheckoutCart checkoutCart;
 
     @BeforeEach
-    void openHomePage() {
+    void openHomePage(Page page) {
         page.navigate("https://practicesoftwaretesting.com");
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp(Page page) {
         searchComponent = new SearchComponent(page);
         productList = new ProductList(page);
         productDetails = new ProductDetails(page);
