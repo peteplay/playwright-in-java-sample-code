@@ -6,9 +6,8 @@ import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
 import com.serenitydojo.playwright.HeadlessChromeOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
-import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -25,7 +24,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 @DisplayName("Contact form")
 @Feature("Contact form")
 @UsePlaywright(HeadlessChromeOptions.class)
-public class ContactFormTest {
+public class ContactFormTest implements RecordsAllureScreenshots {
 
     ContactForm contactForm;
     NavBar navigate;
@@ -50,7 +49,7 @@ public class ContactFormTest {
 
     @AfterEach
     void recordTrace(TestInfo testInfo, BrowserContext context) {
-        String traceName = testInfo.getDisplayName().replace(" ","-").toLowerCase();
+        String traceName = testInfo.getDisplayName().replace(" ", "-").toLowerCase();
         context.tracing().stop(
                 new Tracing.StopOptions()
                         .setPath(Paths.get("target/trace-" + traceName + ".zip"))
@@ -131,4 +130,9 @@ public class ContactFormTest {
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");
     }
+
+//    @AfterEach
+//    public void tearDown(Page page) {
+//        Allure.addAttachment("End of Test Screenshot", new ByteArrayInputStream(page.screenshot()));
+//    }
 }

@@ -3,6 +3,7 @@ package com.serenitydojo.playwright.toolshop.catalog;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.serenitydojo.playwright.HeadlessChromeOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -16,7 +17,7 @@ import java.util.List;
 @DisplayName("Shopping Cart")
 @Feature("Shopping Cart")
 @UsePlaywright(HeadlessChromeOptions.class)
-public class AddToCartTest {
+public class AddToCartTest implements RecordsAllureScreenshots  {
 
     SearchComponent searchComponent;
     ProductList productList;

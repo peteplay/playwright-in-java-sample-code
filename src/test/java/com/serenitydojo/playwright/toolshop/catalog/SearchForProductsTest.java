@@ -3,6 +3,7 @@ package com.serenitydojo.playwright.toolshop.catalog;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.serenitydojo.playwright.HeadlessChromeOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.ProductList;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.SearchComponent;
 import io.qameta.allure.Feature;
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Searching for products")
 @Feature("Searching for products")
 @UsePlaywright(HeadlessChromeOptions.class)
-public class SearchForProductsTest  {
+public class SearchForProductsTest implements RecordsAllureScreenshots {
 
     @BeforeEach
     void openHomePage(Page page) {
