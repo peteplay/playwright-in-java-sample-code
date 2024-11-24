@@ -60,7 +60,7 @@ public class ContactFormTest implements RecordsAllureScreenshots {
     @Story("Submitting a request")
     @DisplayName("Customers can use the contact form to contact us")
     @Test
-    void completeForm() throws URISyntaxException {
+    void completeForm(Page page) throws URISyntaxException {
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
         contactForm.setEmail("sarah@example.com");
@@ -70,6 +70,7 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         Path fileToUpload = Paths.get(ClassLoader.getSystemResource("data/sample-data.txt").toURI());
         contactForm.setAttachment(fileToUpload);
 
+        recordScreenshot(page, "Submit form");
         contactForm.submitForm();
 
         Assertions.assertThat(contactForm.getAlertMessage())

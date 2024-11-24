@@ -9,6 +9,10 @@ import java.io.ByteArrayInputStream;
 public interface RecordsAllureScreenshots {
     @AfterEach
     default void tearDown(Page page) {
-        Allure.addAttachment("End of Test Screenshot", new ByteArrayInputStream(page.screenshot()));
+        recordScreenshot(page,"End of Test Screenshot");
+    }
+
+    default void recordScreenshot(Page page, String screenshotName) {
+        Allure.addAttachment(screenshotName, new ByteArrayInputStream(page.screenshot()));
     }
 }
