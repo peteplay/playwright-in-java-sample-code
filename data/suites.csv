@@ -1,0 +1,55 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sun Nov 24 16:27:06 UTC 2024","Sun Nov 24 16:27:06 UTC 2024","608","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","messageTooShort","The message must be at least 50 characters long",""
+"passed","Sun Nov 24 16:26:48 UTC 2024","Sun Nov 24 16:27:03 UTC 2024","14393","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","invalidEmailField","The email address must be correctly formatted 'not-an-email' should be rejected",""
+"passed","Sun Nov 24 16:27:06 UTC 2024","Sun Nov 24 16:27:07 UTC 2024","946","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","mandatoryFields","First name, last name, email and message are mandatory First name is a mandatory field",""
+"passed","Sun Nov 24 16:27:09 UTC 2024","Sun Nov 24 16:27:10 UTC 2024","593","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","mandatoryFields","First name, last name, email and message are mandatory Message is a mandatory field",""
+"passed","Sun Nov 24 16:27:04 UTC 2024","Sun Nov 24 16:27:06 UTC 2024","1691","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","completeForm","Customers can use the contact form to contact us",""
+"passed","Sun Nov 24 16:27:32 UTC 2024","Sun Nov 24 16:27:33 UTC 2024","966","","Product Catalog","","Sally sorts by different criteria","","Sally sorts by different criteria","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:33 UTC 2024","Sun Nov 24 16:27:34 UTC 2024","824","","Product Catalog","","Sally sorts by different criteria","","Sally sorts by different criteria","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:24 UTC 2024","Sun Nov 24 16:27:24 UTC 2024","744","","Searching by keyword","","com.serenitydojo.playwright.toolshop.catalog.SearchForProductsTest$SearchingByKeyword","whenSearchingByKeyword","When there are matching results",""
+"passed","Sun Nov 24 16:27:07 UTC 2024","Sun Nov 24 16:27:08 UTC 2024","959","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","mandatoryFields","First name, last name, email and message are mandatory Last name is a mandatory field",""
+"passed","Sun Nov 24 16:27:29 UTC 2024","Sun Nov 24 16:27:31 UTC 2024","1380","","Product Catalog","","The one where Sally only wants to see Hand Saws","","The one where Sally only wants to see Hand Saws","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:18 UTC 2024","Sun Nov 24 16:27:22 UTC 2024","4428","","Shopping Cart","","com.serenitydojo.playwright.toolshop.catalog.AddToCartTest","whenCheckingOutASingleItem","Checking out a single item",""
+"passed","Sun Nov 24 16:27:26 UTC 2024","Sun Nov 24 16:27:28 UTC 2024","1802","","Product Catalog","","The one where Sally searches for an Adjustable Wrench","","The one where Sally searches for an Adjustable Wrench","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:31 UTC 2024","Sun Nov 24 16:27:32 UTC 2024","886","","Product Catalog","","Sally sorts by different criteria","","Sally sorts by different criteria","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:10 UTC 2024","Sun Nov 24 16:27:18 UTC 2024","8116","","Shopping Cart","","com.serenitydojo.playwright.toolshop.catalog.AddToCartTest","whenCheckingOutMultipleItems","Checking out multiple items",""
+"passed","Sun Nov 24 16:27:32 UTC 2024","Sun Nov 24 16:27:32 UTC 2024","762","","Product Catalog","","Sally sorts by different criteria","","Sally sorts by different criteria","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:22 UTC 2024","Sun Nov 24 16:27:24 UTC 2024","1211","","Searching for products","","com.serenitydojo.playwright.toolshop.catalog.SearchForProductsTest","clearingTheSearchResults","When the user clears a previous search results",""
+"passed","Sun Nov 24 16:27:03 UTC 2024","Sun Nov 24 16:27:03 UTC 2024","606","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","invalidEmailField","The email address must be correctly formatted 'not-an.email.com' should be rejected",""
+"passed","Sun Nov 24 16:27:03 UTC 2024","Sun Nov 24 16:27:04 UTC 2024","615","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","invalidEmailField","The email address must be correctly formatted 'notanemail' should be rejected",""
+"passed","Sun Nov 24 16:27:29 UTC 2024","Sun Nov 24 16:27:29 UTC 2024","756","","Product Catalog","","The one where Sally searches for a product that doesn't exist","","The one where Sally searches for a product that doesn't exist","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
+"passed","Sun Nov 24 16:27:24 UTC 2024","Sun Nov 24 16:27:25 UTC 2024","818","","Searching by keyword","","com.serenitydojo.playwright.toolshop.catalog.SearchForProductsTest$SearchingByKeyword","whenThereIsNoMatchingProduct","When there are no matching results",""
+"passed","Sun Nov 24 16:27:08 UTC 2024","Sun Nov 24 16:27:09 UTC 2024","931","","Contact form","","com.serenitydojo.playwright.toolshop.contact.ContactFormTest","mandatoryFields","First name, last name, email and message are mandatory Email is a mandatory field",""
+"passed","Sun Nov 24 16:27:28 UTC 2024","Sun Nov 24 16:27:29 UTC 2024","922","","Product Catalog","","The one where Sally searches for a more general term","","The one where Sally searches for a more general term","  As a customer,
+  I want to easily search, filter, and sort products in the catalog
+  So that I can find what I need quickly.
+
+  Sally is an online shopper"
