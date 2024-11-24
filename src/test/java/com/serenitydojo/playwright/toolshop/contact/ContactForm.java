@@ -25,6 +25,11 @@ public class ContactForm {
         this.sendButton = page.getByText("Send");
     }
 
+    public void open() {
+        page.navigate("https://practicesoftwaretesting.com/contact");
+        page.waitForSelector("[data-test=contact-submit]");
+    }
+
     public void setFirstName(String firstName) {
         firstNameField.fill(firstName);
     }

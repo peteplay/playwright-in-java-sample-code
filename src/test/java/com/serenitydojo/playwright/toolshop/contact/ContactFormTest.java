@@ -26,7 +26,7 @@ public class ContactFormTest extends PlaywrightTestCase {
     @BeforeEach
     void openContactPage() {
         contactForm = new ContactForm(page);
-        page.navigate("https://practicesoftwaretesting.com/contact");
+        contactForm.open();
     }
 
     @DisplayName("Customers can use the contact form to contact us")
