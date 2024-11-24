@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: zip-archives
-          path: '*.zip'
+          path: 'target/*.zip'
 
       # Step 8: Deploy Allure report to GitHub Pages
       - name: Deploy Allure Report to GitHub Pages
