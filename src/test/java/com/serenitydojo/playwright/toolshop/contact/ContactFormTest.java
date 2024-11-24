@@ -1,6 +1,9 @@
 package com.serenitydojo.playwright.toolshop.contact;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
+import com.serenitydojo.playwright.HeadlessChromeOptions;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
 import io.qameta.allure.Allure;
@@ -21,13 +24,14 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 @DisplayName("Contact form")
 @Feature("Contact form")
-public class ContactFormTest extends PlaywrightTestCase {
+@UsePlaywright(HeadlessChromeOptions.class)
+public class ContactFormTest {
 
     ContactForm contactForm;
     NavBar navigate;
 
     @BeforeEach
-    void openContactPage() {
+    void openContactPage(Page page) {
         contactForm = new ContactForm(page);
         navigate = new NavBar(page);
         navigate.toTheContactPage();
@@ -56,7 +60,7 @@ public class ContactFormTest extends PlaywrightTestCase {
     @DisplayName("First name, last name, email and message are mandatory")
     @ParameterizedTest(name = "{arguments} is a mandatory field")
     @ValueSource(strings = {"First name", "Last name", "Email", "Message"})
-    void mandatoryFields(String fieldName) {
+    void mandatoryFields(String fieldName, Page page) {
         // Fill in the field values
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
@@ -78,7 +82,7 @@ public class ContactFormTest extends PlaywrightTestCase {
     @Story("Submitting a request")
     @DisplayName("The message must be at least 50 characters long")
     @Test
-    void messageTooShort() {
+    void messageTooShort(Page page) {
 
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
@@ -95,7 +99,7 @@ public class ContactFormTest extends PlaywrightTestCase {
     @DisplayName("The email address must be correctly formatted")
     @ParameterizedTest(name = "'{arguments}' should be rejected")
     @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})
-    void invalidEmailField(String invalidEmail) {
+    void invalidEmailField(String invalidEmail, Page page) {
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
         contactForm.setEmail(invalidEmail);
