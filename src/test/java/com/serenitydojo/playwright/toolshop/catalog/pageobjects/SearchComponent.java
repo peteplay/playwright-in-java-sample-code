@@ -33,5 +33,6 @@ public class SearchComponent {
         page.waitForResponse("**/products?sort=**", () -> {
             page.getByTestId("sort").selectOption(sortFilter);
         });
+        page.waitForTimeout(250);
     }
 }
