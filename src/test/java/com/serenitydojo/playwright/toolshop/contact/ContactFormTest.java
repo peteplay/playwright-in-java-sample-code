@@ -1,11 +1,11 @@
 package com.serenitydojo.playwright.toolshop.contact;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
-import com.serenitydojo.playwright.toolshop.fixtures.ScreenshotManager;
 import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -40,7 +40,7 @@ public class ContactFormTest implements TakesFinalScreenshot {
     @Story("Contact form")
     @DisplayName("Customers can use the contact form to contact us")
     @Test
-    void completeForm() throws URISyntaxException {
+    void completeForm(Page page) throws URISyntaxException {
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
         contactForm.setEmail("sarah@example.com");
@@ -52,8 +52,8 @@ public class ContactFormTest implements TakesFinalScreenshot {
 
         contactForm.submitForm();
 
-        Assertions.assertThat(contactForm.getAlertMessage())
-                .contains("Thanks for your message! We will contact you shortly.");
+        assertThat(contactForm.alertMessage()).isVisible();
+        assertThat(contactForm.alertMessage()).hasText("Thanks for your message! We will contact you shortly.");
     }
 
     @Story("Contact form")
@@ -74,9 +74,8 @@ public class ContactFormTest implements TakesFinalScreenshot {
         contactForm.submitForm();
 
         // Check the error message for that field
-        var errorMessage = page.getByRole(AriaRole.ALERT).getByText(fieldName + " is required");
-
-        assertThat(errorMessage).isVisible();
+        assertThat(contactForm.alertMessage()).isVisible();
+        assertThat(contactForm.alertMessage()).hasText(fieldName + " is required");
     }
 
     @Story("Contact form")
@@ -92,7 +91,8 @@ public class ContactFormTest implements TakesFinalScreenshot {
 
         contactForm.submitForm();
 
-        assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
+        assertThat(contactForm.alertMessage()).isVisible();
+        assertThat(contactForm.alertMessage()).hasText("Message must be minimal 50 characters");
     }
 
     @Story("Contact form")
@@ -108,6 +108,7 @@ public class ContactFormTest implements TakesFinalScreenshot {
 
         contactForm.submitForm();
 
-        assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");
+        assertThat(contactForm.alertMessage()).isVisible();
+        assertThat(contactForm.alertMessage()).hasText("Email format is invalid");
     }
 }

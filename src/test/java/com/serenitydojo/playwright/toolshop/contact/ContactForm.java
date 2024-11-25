@@ -58,8 +58,8 @@ public class ContactForm {
         sendButton.click();
     }
 
-    public String getAlertMessage() {
-        return page.getByRole(AriaRole.ALERT).textContent();
+    public Locator alertMessage() {
+        return page.getByRole(AriaRole.ALERT);
     }
 
     public void clearField(String fieldName) {
