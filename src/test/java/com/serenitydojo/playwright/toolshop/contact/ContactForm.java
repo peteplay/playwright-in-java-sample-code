@@ -55,7 +55,7 @@ public class ContactForm {
 
     public void submitForm() {
         ScreenshotManager.takeScreenshot(page,"Submit contact form");
-        page.waitForTimeout(500);
+        page.waitForTimeout(250);
         sendButton.click();
     }
 
