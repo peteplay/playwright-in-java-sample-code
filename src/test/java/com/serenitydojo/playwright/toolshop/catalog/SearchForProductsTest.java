@@ -1,8 +1,11 @@
 package com.serenitydojo.playwright.toolshop.catalog;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.UsePlaywright;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.ProductList;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.SearchComponent;
-import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
+import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -13,10 +16,11 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Searching for products")
 @Feature("Product Catalog")
-public class SearchForProductsTest extends PlaywrightTestCase {
+@UsePlaywright(ChromeHeadlessOptions.class)
+public class SearchForProductsTest implements TakesFinalScreenshot {
 
     @BeforeEach
-    void openHomePage() {
+    void openHomePage(Page page) {
         page.navigate("https://practicesoftwaretesting.com");
     }
 
@@ -27,7 +31,7 @@ public class SearchForProductsTest extends PlaywrightTestCase {
 
         @Test
         @DisplayName("When there are matching results")
-        void whenSearchingByKeyword() {
+        void whenSearchingByKeyword(Page page) {
             SearchComponent searchComponent = new SearchComponent(page);
             ProductList productList = new ProductList(page);
 
@@ -40,7 +44,7 @@ public class SearchForProductsTest extends PlaywrightTestCase {
 
         @Test
         @DisplayName("When there are no matching results")
-        void whenThereIsNoMatchingProduct() {
+        void whenThereIsNoMatchingProduct(Page page) {
             SearchComponent searchComponent = new SearchComponent(page);
             ProductList productList = new ProductList(page);
             searchComponent.searchBy("unknown");
@@ -53,7 +57,7 @@ public class SearchForProductsTest extends PlaywrightTestCase {
 
         @Test
         @DisplayName("When the user clears a previous search results")
-        void clearingTheSearchResults() {
+        void clearingTheSearchResults(Page page) {
             SearchComponent searchComponent = new SearchComponent(page);
             ProductList productList = new ProductList(page);
             searchComponent.searchBy("saw");

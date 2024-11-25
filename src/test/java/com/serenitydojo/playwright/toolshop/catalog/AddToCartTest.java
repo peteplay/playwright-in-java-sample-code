@@ -1,9 +1,11 @@
 package com.serenitydojo.playwright.toolshop.catalog;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.UsePlaywright;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
-import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
+import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +16,8 @@ import java.util.List;
 
 @DisplayName("Shopping Cart")
 @Feature("Shopping Cart")
-public class AddToCartTest extends PlaywrightTestCase {
+@UsePlaywright(ChromeHeadlessOptions.class)
+public class AddToCartTest implements TakesFinalScreenshot {
 
     SearchComponent searchComponent;
     ProductList productList;
@@ -28,13 +31,14 @@ public class AddToCartTest extends PlaywrightTestCase {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp(Page page) {
         searchComponent = new SearchComponent(page);
         productList = new ProductList(page);
         productDetails = new ProductDetails(page);
         navBar = new NavBar(page);
         checkoutCart = new CheckoutCart(page);
     }
+
 
     @Test
     @Story("Checking out a product")
