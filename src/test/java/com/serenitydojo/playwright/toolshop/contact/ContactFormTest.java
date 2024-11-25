@@ -1,18 +1,17 @@
 package com.serenitydojo.playwright.toolshop.contact;
 
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
-import com.serenitydojo.playwright.HeadlessChromeOptions;
-import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
+import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -23,9 +22,9 @@ import java.nio.file.Paths;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @DisplayName("Contact form")
-@Feature("Contact form")
-@UsePlaywright(HeadlessChromeOptions.class)
-public class ContactFormTest implements RecordsAllureScreenshots {
+@Feature("Contacts")
+@UsePlaywright(ChromeHeadlessOptions.class)
+public class ContactFormTest implements TakesFinalScreenshot {
 
     ContactForm contactForm;
     NavBar navigate;
@@ -37,31 +36,10 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         navigate.toTheContactPage();
     }
 
-
-    @BeforeEach
-    void setupTrace(BrowserContext context) {
-        context.tracing().start(
-                new Tracing.StartOptions()
-                        .setScreenshots(true)
-                        .setSnapshots(true)
-                        .setSources(true)
-        );
-    }
-
-    @AfterEach
-    void recordTrace(TestInfo testInfo, BrowserContext context) {
-        String traceName = testInfo.getDisplayName().replace(" ", "-").toLowerCase();
-        context.tracing().stop(
-                new Tracing.StopOptions()
-                        .setPath(Paths.get("target/trace-" + traceName + ".zip"))
-        );
-    }
-
-
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("Customers can use the contact form to contact us")
     @Test
-    void completeForm(Page page) throws URISyntaxException {
+    void completeForm() throws URISyntaxException {
         contactForm.setFirstName("Sarah-Jane");
         contactForm.setLastName("Smith");
         contactForm.setEmail("sarah@example.com");
@@ -71,19 +49,13 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         Path fileToUpload = Paths.get(ClassLoader.getSystemResource("data/sample-data.txt").toURI());
         contactForm.setAttachment(fileToUpload);
 
-        recordScreenshot(page, "Submit form");
         contactForm.submitForm();
 
         Assertions.assertThat(contactForm.getAlertMessage())
                 .contains("Thanks for your message! We will contact you shortly.");
     }
 
-    @Step
-    void submitTheForm(Page page) {
-
-    }
-
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("First name, last name, email and message are mandatory")
     @ParameterizedTest(name = "{arguments} is a mandatory field")
     @ValueSource(strings = {"First name", "Last name", "Email", "Message"})
@@ -98,7 +70,6 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         // Clear one of the fields
         contactForm.clearField(fieldName);
 
-        recordScreenshot(page, "Submit form");
         contactForm.submitForm();
 
         // Check the error message for that field
@@ -107,7 +78,7 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         assertThat(errorMessage).isVisible();
     }
 
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("The message must be at least 50 characters long")
     @Test
     void messageTooShort(Page page) {
@@ -118,13 +89,12 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         contactForm.setMessage("A short long message.");
         contactForm.selectSubject("Warranty");
 
-        recordScreenshot(page, "Submit form");
         contactForm.submitForm();
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
     }
 
-    @Story("Submitting a request")
+    @Story("Contact form")
     @DisplayName("The email address must be correctly formatted")
     @ParameterizedTest(name = "'{arguments}' should be rejected")
     @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})
@@ -135,7 +105,6 @@ public class ContactFormTest implements RecordsAllureScreenshots {
         contactForm.setMessage("A very long message to the warranty service about a warranty on a product!");
         contactForm.selectSubject("Warranty");
 
-        recordScreenshot(page, "Submit form");
         contactForm.submitForm();
 
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Email format is invalid");

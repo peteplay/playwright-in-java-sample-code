@@ -2,10 +2,10 @@ package com.serenitydojo.playwright.toolshop.catalog;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
-import com.serenitydojo.playwright.HeadlessChromeOptions;
-import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.ProductList;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.SearchComponent;
+import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -15,9 +15,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Searching for products")
-@Feature("Searching for products")
-@UsePlaywright(HeadlessChromeOptions.class)
-public class SearchForProductsTest implements RecordsAllureScreenshots {
+@Feature("Product Catalog")
+@UsePlaywright(ChromeHeadlessOptions.class)
+public class SearchForProductsTest implements TakesFinalScreenshot {
 
     @BeforeEach
     void openHomePage(Page page) {
@@ -54,22 +54,21 @@ public class SearchForProductsTest implements RecordsAllureScreenshots {
             Assertions.assertThat(matchingProducts).isEmpty();
             Assertions.assertThat(productList.getSearchCompletedMessage()).contains("There are no products found.");
         }
-    }
 
-    @Test
-    @Story("Clearing the previous search results")
-    @DisplayName("When the user clears a previous search results")
-    void clearingTheSearchResults(Page page) {
-        SearchComponent searchComponent = new SearchComponent(page);
-        ProductList productList = new ProductList(page);
-        searchComponent.searchBy("saw");
+        @Test
+        @DisplayName("When the user clears a previous search results")
+        void clearingTheSearchResults(Page page) {
+            SearchComponent searchComponent = new SearchComponent(page);
+            ProductList productList = new ProductList(page);
+            searchComponent.searchBy("saw");
 
-        var matchingFilteredProducts = productList.getProductNames();
-        Assertions.assertThat(matchingFilteredProducts).hasSize(2);
+            var matchingFilteredProducts = productList.getProductNames();
+            Assertions.assertThat(matchingFilteredProducts).hasSize(2);
 
-        searchComponent.clearSearch();
+            searchComponent.clearSearch();
 
-        var matchingProducts = productList.getProductNames();
-        Assertions.assertThat(matchingProducts).hasSize(9);
+            var matchingProducts = productList.getProductNames();
+            Assertions.assertThat(matchingProducts).hasSize(9);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.serenitydojo.playwright;
+package com.serenitydojo.playwright.toolshop.fixtures;
 
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.junit.Options;
@@ -6,7 +6,7 @@ import com.microsoft.playwright.junit.OptionsFactory;
 
 import java.util.Arrays;
 
-public class HeadlessChromeOptions implements OptionsFactory {
+public class ChromeHeadlessOptions implements OptionsFactory {
     @Override
     public Options getOptions() {
         return new Options().setLaunchOptions(

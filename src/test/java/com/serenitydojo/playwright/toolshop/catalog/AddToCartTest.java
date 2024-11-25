@@ -2,9 +2,9 @@ package com.serenitydojo.playwright.toolshop.catalog;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
-import com.serenitydojo.playwright.HeadlessChromeOptions;
-import com.serenitydojo.playwright.toolshop.fixtures.RecordsAllureScreenshots;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
+import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -16,8 +16,8 @@ import java.util.List;
 
 @DisplayName("Shopping Cart")
 @Feature("Shopping Cart")
-@UsePlaywright(HeadlessChromeOptions.class)
-public class AddToCartTest implements RecordsAllureScreenshots  {
+@UsePlaywright(ChromeHeadlessOptions.class)
+public class AddToCartTest implements TakesFinalScreenshot {
 
     SearchComponent searchComponent;
     ProductList productList;
@@ -26,8 +26,8 @@ public class AddToCartTest implements RecordsAllureScreenshots  {
     CheckoutCart checkoutCart;
 
     @BeforeEach
-    void openHomePage(Page page) {
-        page.navigate("https://practicesoftwaretesting.com");
+    void openHomePage() {
+        navBar.openHomePage();
     }
 
     @BeforeEach
@@ -39,8 +39,9 @@ public class AddToCartTest implements RecordsAllureScreenshots  {
         checkoutCart = new CheckoutCart(page);
     }
 
+
     @Test
-    @Story("Check out")
+    @Story("Checking out a product")
     @DisplayName("Checking out a single item")
     void whenCheckingOutASingleItem() {
         searchComponent.searchBy("pliers");
@@ -64,7 +65,7 @@ public class AddToCartTest implements RecordsAllureScreenshots  {
     }
 
     @Test
-    @Story("Check out")
+    @Story("Checking out a product")
     @DisplayName("Checking out multiple items")
     void whenCheckingOutMultipleItems() {
         navBar.openHomePage();
