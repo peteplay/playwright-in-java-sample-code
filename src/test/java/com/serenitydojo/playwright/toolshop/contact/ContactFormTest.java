@@ -5,6 +5,7 @@ import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
+import com.serenitydojo.playwright.toolshop.fixtures.ScreenshotManager;
 import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;

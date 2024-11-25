@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import com.serenitydojo.playwright.toolshop.fixtures.ScreenshotManager;
 
 import java.nio.file.Path;
 
@@ -53,6 +54,7 @@ public class ContactForm {
     }
 
     public void submitForm() {
+        ScreenshotManager.takeScreenshot(page,"Submit contact form");
         sendButton.click();
     }
 
