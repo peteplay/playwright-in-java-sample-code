@@ -1,26 +1,18 @@
 package com.serenitydojo.playwright.toolshop.catalog;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Tracing;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.serenitydojo.playwright.HeadlessChromeOptions;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
-import com.serenitydojo.playwright.toolshop.fixtures.PlaywrightTestCase;
+import com.serenitydojo.playwright.toolshop.fixtures.WithTracing;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 @UsePlaywright(HeadlessChromeOptions.class)
-public class AddToCartTest {
+public class AddToCartTest implements WithTracing {
 
     SearchComponent searchComponent;
     ProductList productList;
@@ -40,25 +32,6 @@ public class AddToCartTest {
         productDetails = new ProductDetails(page);
         navBar = new NavBar(page);
         checkoutCart = new CheckoutCart(page);
-    }
-
-    @BeforeEach
-    void setupTrace(BrowserContext context) {
-        context.tracing().start(
-                new Tracing.StartOptions()
-                        .setScreenshots(true)
-                        .setSnapshots(true)
-                        .setSources(true)
-        );
-    }
-
-    @AfterEach
-    void recordTrace(TestInfo testInfo, BrowserContext context) {
-        String traceName = testInfo.getDisplayName().replace(" ","-").toLowerCase();
-        context.tracing().stop(
-                new Tracing.StopOptions()
-                        .setPath(Paths.get("trace-" + traceName + ".zip"))
-        );
     }
 
     @Test
