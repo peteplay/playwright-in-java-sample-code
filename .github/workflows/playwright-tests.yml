@@ -61,11 +61,13 @@ jobs:
 
       # Step 5: Zip the Allure Report
       - name: Zip Allure Report
+        if: always()
         run: |
           zip -r allure-report.zip target/site/allure-maven-plugin
 
       # Step 6: Upload ZIP Artifact
       - name: Upload Allure Report ZIP
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
@@ -83,10 +85,12 @@ jobs:
 
       # Step 2: Unzip the Allure Report
       - name: Unzip Allure Report
+        if: always()
         run: unzip allure-report.zip -d target/site/
 
       # Step 3: Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report to GitHub Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
