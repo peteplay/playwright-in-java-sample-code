@@ -9,9 +9,8 @@ import java.nio.file.Paths;
 
 public class ScenarioTracingFixtures {
 
-
     @Before
-    public void setupTrace() {
+    public void setupTracing() {
         PlaywrightCucumberFixtures.getBrowserContext().tracing().start(
                 new Tracing.StartOptions()
                         .setScreenshots(true)
@@ -20,14 +19,13 @@ public class ScenarioTracingFixtures {
         );
     }
 
-    @After(order = 1000)
-    public void recordTrace(Scenario scenario) {
-
-        String traceName = scenario.getName();
+    @After
+    public void recordTraces(Scenario scenario) {
+        String traceName = scenario.getName().replace(" ","-").toLowerCase();
         PlaywrightCucumberFixtures.getBrowserContext().tracing().stop(
                 new Tracing.StopOptions()
                         .setPath(Paths.get("target/traces/trace-" + traceName + ".zip"))
         );
-    }
 
+    }
 }
