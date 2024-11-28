@@ -87,7 +87,9 @@ jobs:
       # Step 2: Unzip the Allure Report
       - name: Unzip Allure Report
         if: always()
-        run: unzip allure-report.zip -d target/site/
+        run: |
+          mkdir -p target/site/
+          unzip allure-report.zip -d target/site/
 
       # Step 3: Deploy Allure Report to GitHub Pages
       - name: Deploy Allure Report to GitHub Pages
