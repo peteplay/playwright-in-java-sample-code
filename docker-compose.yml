@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: ./react-todomvc
+    ports:
+      - "7002:7002"
+    networks:
+      - test-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7002"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Ensure the webapp service doesn't restart automatically
+    restart: "no"
+
+  tests:
+    build:
+      context: ./todomvc-acceptance-tests
+    depends_on:
+      webapp:
+        condition: service_healthy
+    networks:
+      - test-network
+    volumes:
+      - ./todomvc-acceptance-tests/target:/tests/target
+    # Ensure the webapp service doesn't restart automatically
+    environment:
+      - APP_HOST_URL=http://webapp:7002
+    user: "${UID}:${GID}"
+    restart: "no"
+
+networks:
+  test-network:
+    driver: bridge

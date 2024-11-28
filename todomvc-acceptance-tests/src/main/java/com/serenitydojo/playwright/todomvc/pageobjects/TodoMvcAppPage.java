@@ -2,6 +2,7 @@ package com.serenitydojo.playwright.todomvc.pageobjects;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -12,15 +13,17 @@ public class TodoMvcAppPage {
     private final Locator todoItems;
     private final Locator todoField;
 
+    private final String baseUrl;
+
     public TodoMvcAppPage(Page page) {
         this.page = page;
-
+        baseUrl = (StringUtils.isEmpty(System.getenv("APP_HOST_URL"))) ? "http://localhost:7002" : System.getenv("APP_HOST_URL");
         this.todoItems = page.getByTestId("todo-item");
         this.todoField = page.getByTestId("text-input");
     }
 
     public void open() {
-        page.navigate("http://localhost:7002");
+        page.navigate(baseUrl);
     }
 
     public List<String> todoItemsDisplayed() {
