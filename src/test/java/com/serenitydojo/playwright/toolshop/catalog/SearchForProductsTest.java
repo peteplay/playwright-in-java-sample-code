@@ -6,6 +6,7 @@ import com.serenitydojo.playwright.toolshop.catalog.pageobjects.ProductList;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.SearchComponent;
 import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
 import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
+import com.serenitydojo.playwright.toolshop.fixtures.WithTracing;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Searching for products")
 @Feature("Product Catalog")
 @UsePlaywright(ChromeHeadlessOptions.class)
-public class SearchForProductsTest implements TakesFinalScreenshot {
+public class SearchForProductsTest implements TakesFinalScreenshot, WithTracing {
 
     @BeforeEach
     void openHomePage(Page page) {

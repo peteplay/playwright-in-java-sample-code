@@ -5,6 +5,7 @@ import com.microsoft.playwright.junit.UsePlaywright;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.*;
 import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
 import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
+import com.serenitydojo.playwright.toolshop.fixtures.WithTracing;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -17,7 +18,7 @@ import java.util.List;
 @DisplayName("Shopping Cart")
 @Feature("Shopping Cart")
 @UsePlaywright(ChromeHeadlessOptions.class)
-public class AddToCartTest implements TakesFinalScreenshot {
+public class AddToCartTest implements TakesFinalScreenshot, WithTracing {
 
     SearchComponent searchComponent;
     ProductList productList;

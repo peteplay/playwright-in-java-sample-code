@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -39,9 +39,9 @@ jobs:
           java-distribution: temurin
           maven-version: 3.9.9
 
-      # Step 4: Verify Maven installation
-      - name: Verify Maven version
-        run: mvn --version
+      # Step 4: Install playwright OS libraries
+      - name: Install Playwright dependencies
+        run: npx playwright install-deps
 
       # Step 5: Cache Maven dependencies
       - name: Cache Maven dependencies
@@ -52,20 +52,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
-      - name: Install Playwright dependencies
-        run: npx playwright install-deps
-
       # Step 6: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: mvn verify
 
-#      # Step 7: Archive ZIP files in the root directory
-#      - name: Archive ZIP files
-#        if: always()  # Ensure this step runs even if previous steps fail
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: zip-archives
-#          path: 'target/*.zip'
+      # Step 7: Archive any trace files
+      - name: Archive trace files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces
+          path: target/traces/*.zip
 
       # Step 8: Deploy Allure report to GitHub Pages
       - name: Deploy Allure Report to GitHub Pages

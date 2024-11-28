@@ -7,6 +7,7 @@ import com.microsoft.playwright.options.AriaRole;
 import com.serenitydojo.playwright.toolshop.catalog.pageobjects.NavBar;
 import com.serenitydojo.playwright.toolshop.fixtures.ChromeHeadlessOptions;
 import com.serenitydojo.playwright.toolshop.fixtures.TakesFinalScreenshot;
+import com.serenitydojo.playwright.toolshop.fixtures.WithTracing;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -25,7 +26,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 @DisplayName("Contact form")
 @Feature("Contacts")
 @UsePlaywright(ChromeHeadlessOptions.class)
-public class ContactFormTest implements TakesFinalScreenshot {
+public class ContactFormTest implements TakesFinalScreenshot, WithTracing {
 
     ContactForm contactForm;
     NavBar navigate;

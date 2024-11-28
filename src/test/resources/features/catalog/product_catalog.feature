@@ -36,6 +36,14 @@ Feature: Product Catalog
         | Product  | Price  |
         | Wood Saw | $12.18 |
 
+    Example: The one where Sally only wants to see Power Drills
+      Given Sally is on the home page
+      When she searches for "drill"
+      And she filters by "Power Tools"
+      Then the following products should be displayed:
+        | Product  | Price  |
+        | Cordless Drill 24V | $66.54 |
+        | Cordless Drill 12V | $46.50 |
 
   Rule: Customers should be able to sort products by various criteria
     Scenario Outline: Sally sorts by different criteria

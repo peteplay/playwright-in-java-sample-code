@@ -34,7 +34,7 @@ public class PlaywrightCucumberFixtures {
         page.set(browserContext.get().newPage());
     }
 
-    @After
+    @After(order = 100)
     public void closeContext() {
         browserContext.get().close();
     }
@@ -51,4 +51,9 @@ public class PlaywrightCucumberFixtures {
     public static Page getPage() {
         return page.get();
     }
+
+    public static BrowserContext getBrowserContext() {
+        return browserContext.get();
+    }
+
 }
