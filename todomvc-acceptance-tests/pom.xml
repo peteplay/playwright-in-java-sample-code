@@ -104,6 +104,39 @@
             </plugin>
 
             <plugin>
+                <groupId>com.bazaarvoice.maven.plugins</groupId>
+                <artifactId>process-exec-maven-plugin</artifactId>
+                <version>0.9</version>
+                <executions>
+                    <execution>
+                        <id>start-app</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>react-app</name>
+                            <workingDir>${project.basedir}/../react-todomvc</workingDir>
+                            <waitForInterrupt>false</waitForInterrupt>
+                            <healthcheckUrl>http://localhost:7002</healthcheckUrl>
+                            <arguments>
+                                <argument>npm</argument>
+                                <argument>run</argument>
+                                <argument>serve</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-app</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop-all</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.3</version>
@@ -141,7 +174,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
