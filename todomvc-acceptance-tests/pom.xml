@@ -109,6 +109,21 @@
                 <version>0.9</version>
                 <executions>
                     <execution>
+                        <id>npm-install</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>npm-install</name>
+                            <workingDir>${project.basedir}/../react-todomvc</workingDir>
+                            <arguments>
+                                <argument>npm</argument>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>start-app</id>
                         <phase>pre-integration-test</phase>
                         <goals>
