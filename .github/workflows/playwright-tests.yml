@@ -52,6 +52,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
+      # Step 6: Install npm dependencies, including http-server
+      - name: Install npm dependencies
+        run: |
+          npm install
+          npm install -g http-server            
+
       - name: Install Playwright dependencies
         run: npx playwright install-deps
 
