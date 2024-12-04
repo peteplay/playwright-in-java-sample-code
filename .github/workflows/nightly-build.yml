@@ -52,6 +52,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ matrix.branch }}
+          clean: true
 
       # Check out the branch
       - name: Fetch specific branch
@@ -111,4 +112,6 @@ jobs:
       - name: Run Playwright Tests
         run: |
           echo "Running tests for branch ${{ matrix.branch }}"
-          mvn verify
+          echo "Project structure with .java files:"
+          find . -name "*.java" | sed 's|[^/]*/|  |g'
+          mvn clean verify
