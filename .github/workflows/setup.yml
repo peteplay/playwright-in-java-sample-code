@@ -58,3 +58,9 @@ jobs:
       # Install Playwright dependencies
       - name: Install Playwright dependencies
         run: npx playwright install-deps
+
+
+      - name: Run Playwright Tests
+        run: |
+          echo "Running tests for branch ${{ inputs.branch }}"
+          mvn clean verify

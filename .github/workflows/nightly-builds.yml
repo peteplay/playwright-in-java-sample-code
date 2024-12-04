@@ -1,29 +1,37 @@
-name: Nightly Buildss
+name: Nightly Builds
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   build-main:
     name: Build Main
-    uses: ./.github/workflows/setup.yml
+    uses: ./.github/workflows/setup-and-test.yml
     with:
       branch: main
 
   build-start-here:
     name: Build Start Here
-    uses: ./.github/workflows/setup.yml
+    uses: ./.github/workflows/setup-and-test.yml
     with:
       branch: sample-code/start-here
 
   build-module-3:
     name: Build Module 3
-    uses: ./.github/workflows/setup.yml
+    uses: ./.github/workflows/setup-and-test.yml
     with:
       branch: sample-code/module-3-my-first-playwright-test
 
   build-module-4:
     name: Build Module 4
-    uses: ./.github/workflows/setup.yml
+    uses: ./.github/workflows/setup-and-test.yml
     with:
       branch: sample-code/module-4-interacting-with-elements
+
+  build-module-5:
+    name: Build Module 5
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      branch: sample-code/module-5-refactoring
