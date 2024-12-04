@@ -37,6 +37,12 @@ jobs:
           - sample-code/module-20-docker-start
           - sample-code/module-20-docker
           - sample-code/end-to-end
+    name: Build (${{
+      matrix.branch == 'main'
+      && 'main'
+      || (matrix.branch startsWith('sample-code/') && format('{0}', matrix.branch[12:]) || matrix.branch)
+      }})
+
     steps:
       # Check out the repository code for the specific branch
       - name: Checkout repository
