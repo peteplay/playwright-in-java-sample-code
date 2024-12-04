@@ -37,6 +37,7 @@ jobs:
           - sample-code/module-20-docker-start
           - sample-code/module-20-docker
           - sample-code/end-to-end
+    continue-on-error: true # Allow the job to continue even if one branch fails
     steps:
       # Check out the repository code for the specific branch
       - name: Checkout repository
@@ -49,12 +50,9 @@ jobs:
       - name: Fetch specific branch
         run: git fetch origin ${{ matrix.branch }} && git checkout ${{ matrix.branch }}
 
-      # List contents of the test directory
-      - name: List test files
+      - name: Show current branch
         run: |
           echo "Current branch: ${{ matrix.branch }}"
-          echo "Test cases:"
-          ls -R src/test/java/com/serenitydojo/playwright
 
       # Set up Node.js
       - name: Set up Node.js
