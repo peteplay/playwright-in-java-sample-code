@@ -108,10 +108,13 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install-deps
 
-      # Run Maven to execute Playwright tests
+      - name: Show Project Structure
+        run: |
+          echo "Project structure with .java files:"
+          find . -name "*.java" | sed 's|[^/]*/|  |g'
+          
+          # Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: |
           echo "Running tests for branch ${{ matrix.branch }}"
-          echo "Project structure with .java files:"
-          find . -name "*.java" | sed 's|[^/]*/|  |g'
           mvn clean verify

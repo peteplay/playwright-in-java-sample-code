@@ -1,0 +1,29 @@
+name: Nightly Buildss
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-main:
+    name: Build Main
+    uses: ./.github/workflows/setup.yml
+    with:
+      branch: main
+
+  build-start-here:
+    name: Build Start Here
+    uses: ./.github/workflows/setup.yml
+    with:
+      branch: sample-code/start-here
+
+  build-module-3:
+    name: Build Module 3
+    uses: ./.github/workflows/setup.yml
+    with:
+      branch: sample-code/module-3-my-first-playwright-test
+
+  build-module-4:
+    name: Build Module 4
+    uses: ./.github/workflows/setup.yml
+    with:
+      branch: sample-code/module-4-interacting-with-elements
