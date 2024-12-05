@@ -35,6 +35,7 @@ public class PurchaseWorkflow {
         productDetails.addToCart();
     }
 
+    @Step("Check out the cart")
     public void checkOutCart() {
         navBar.openCart();
         shoppingCart.proceedToCheckout();
@@ -44,10 +45,12 @@ public class PurchaseWorkflow {
         shoppingCart.proceedToCheckoutAfterAuthentication();
     }
 
+    @Step("Confirm address")
     public void confirmAddress() {
         addressForm.confirmAddress();
     }
 
+    @Step("Choose payment method")
     public void choosePaymentMethod(String paymentMethod) {
         paymentForm.choosePaymentMethod(paymentMethod);
     }
