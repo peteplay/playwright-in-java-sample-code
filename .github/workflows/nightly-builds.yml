@@ -132,6 +132,12 @@ jobs:
     with:
       branch: sample-code/module-17-cucumber
 
+  build-module-18:
+    name: Module 18 Workflow Tests
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      branch: sample-code/module-18-end-to-end
+
   build-module-20-start:
     name: Module 20 Docker Start
     uses: ./.github/workflows/setup-and-test.yml
