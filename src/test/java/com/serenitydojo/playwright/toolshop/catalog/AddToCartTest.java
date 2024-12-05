@@ -24,7 +24,7 @@ public class AddToCartTest implements TakesFinalScreenshot, WithTracing {
     ProductList productList;
     ProductDetails productDetails;
     NavBar navBar;
-    CheckoutCart checkoutCart;
+    ShoppingCart shoppingCart;
 
     @BeforeEach
     void openHomePage() {
@@ -37,7 +37,7 @@ public class AddToCartTest implements TakesFinalScreenshot, WithTracing {
         productList = new ProductList(page);
         productDetails = new ProductDetails(page);
         navBar = new NavBar(page);
-        checkoutCart = new CheckoutCart(page);
+        shoppingCart = new ShoppingCart(page);
     }
 
 
@@ -48,12 +48,12 @@ public class AddToCartTest implements TakesFinalScreenshot, WithTracing {
         searchComponent.searchBy("pliers");
         productList.viewProductDetails("Combination Pliers");
 
-        productDetails.increaseQuanityBy(2);
+        productDetails.setQuantityTo(2);
         productDetails.addToCart();
 
         navBar.openCart();
 
-        List<CartLineItem> lineItems = checkoutCart.getLineItems();
+        List<CartLineItem> lineItems = shoppingCart.getLineItems();
 
         Assertions.assertThat(lineItems)
                 .hasSize(1)
@@ -72,7 +72,7 @@ public class AddToCartTest implements TakesFinalScreenshot, WithTracing {
         navBar.openHomePage();
 
         productList.viewProductDetails("Bolt Cutters");
-        productDetails.increaseQuanityBy(2);
+        productDetails.setQuantityTo(2);
         productDetails.addToCart();
 
         navBar.openHomePage();
@@ -81,7 +81,7 @@ public class AddToCartTest implements TakesFinalScreenshot, WithTracing {
 
         navBar.openCart();
 
-        List<CartLineItem> lineItems = checkoutCart.getLineItems();
+        List<CartLineItem> lineItems = shoppingCart.getLineItems();
 
         Assertions.assertThat(lineItems).hasSize(2);
         List<String> productNames = lineItems.stream().map(CartLineItem::title).toList();

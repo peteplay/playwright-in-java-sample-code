@@ -12,8 +12,8 @@ public class ProductDetails {
     }
 
     @Step("Increase product quantity")
-    public void increaseQuanityBy(int increment) {
-        for (int i = 1; i <= increment; i++) {
+    public void setQuantityTo(int quantity) {
+        for (int i = 1; i <= quantity; i++) {
             page.getByTestId("increase-quantity").click();
         }
     }
@@ -28,4 +28,5 @@ public class ProductDetails {
                 }
         );
     }
+
 }

@@ -1,14 +1,13 @@
 package com.serenitydojo.playwright.toolshop.catalog.pageobjects;
 
 import com.microsoft.playwright.Page;
-import io.qameta.allure.Step;
 
 import java.util.List;
 
-public class CheckoutCart {
+public class ShoppingCart {
     private final Page page;
 
-    public CheckoutCart(Page page) {
+    public ShoppingCart(Page page) {
         this.page = page;
     }
 
@@ -36,4 +35,11 @@ public class CheckoutCart {
         return value.replace("$", "");
     }
 
+    public void proceedToCheckout() {
+        page.getByTestId("proceed-1").click();
+    }
+
+    public void proceedToCheckoutAfterAuthentication() {
+        page.getByTestId("proceed-2").click();
+    }
 }
