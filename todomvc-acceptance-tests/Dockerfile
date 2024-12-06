@@ -1,5 +1,5 @@
-# Use OpenJDK 17 slim as the base image
-FROM openjdk:17-slim
+# Use OpenJDK 23 slim as the base image
+FROM openjdk:23-slim
 
 # Install dependencies
 RUN apt-get update && \
@@ -18,9 +18,9 @@ ENV PATH "$MAVEN_HOME/bin:$PATH"
 # Verify Maven installation
 RUN mvn -version
 
-# Install curl and update CA certificates
+# Update CA certificates
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl ca-certificates && \
+    apt-get install -y --no-install-recommends ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Node.js and npm
