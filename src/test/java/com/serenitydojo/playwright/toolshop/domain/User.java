@@ -20,10 +20,10 @@ public record User(
     public static User randomUser() {
         Faker fake = new Faker();
 
-        int year = fake.number().numberBetween(1970,2000);
-        int month = fake.number().numberBetween(1,12);
-        int day = fake.number().numberBetween(1,28);
-        LocalDate date = LocalDate.of(year,month,day);
+        int year = fake.number().numberBetween(1970, 2000);
+        int month = fake.number().numberBetween(1, 12);
+        int day = fake.number().numberBetween(1, 28);
+        LocalDate date = LocalDate.of(year, month, day);
         String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         return new User(
@@ -55,4 +55,9 @@ public record User(
                 password,
                 email);
     }
+
+    public User withFirstName(String first_name) {
+        return new User(first_name,last_name,address,city,state,country,postcode,phone,dob,password,email);
+    }
+
 }
